@@ -1,0 +1,20 @@
+GIMP Palette
+Name: RosePineMoon
+#Colors: 16
+ 35  34  54 base
+ 43  41  62 surface
+ 51  49  71 overlay
+108 103 132 muted
+151 147 178 subtle
+173 169 199 text
+235 149 151 love
+242 177 141 gold
+237 165 182 rose
+ 91 126 149 pine
+141 209 199 foam
+149 181 247 iris
+ 92  87 117 highlightLow
+245  22  20 highlightLowAlpha
+147 143 173 highlightMed
+173 169 199 highlightHigh
+ 51  49  71 highlightOverlay

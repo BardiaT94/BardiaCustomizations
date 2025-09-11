@@ -1,0 +1,19 @@
+GIMP Palette
+Name: RosePine
+#Colors: 16
+ 25  23  36 base
+ 32  30  45 surface
+ 40  37  54 overlay
+ 98  92 119 muted
+143 138 168 subtle
+166 161 191 text
+231 130 132 love
+239 159 118 gold
+233 146 165 rose
+ 78 114 135 pine
+129 200 190 foam
+140 170 238 iris
+ 83  77 105 highlightLow
+139 134 163 highlightMed
+166 161 191 highlightHigh
+ 40  37  54 highlightOverlay
