@@ -3,32 +3,15 @@
 % ====================
 % Packages
 % ====================
-
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
-\usepackage[orientation=lanscape,size=custom,width=121.92,height=91.44,scale=1.2]{beamerposter}
+\usepackage[orientation=lanscape,size=custom,width=121.92,height=91.44,scale=1]{beamerposter}
 \usetheme{BardiaTheme}
 \usecolortheme{BardiaColors}
-
-% ====================
-% Lengths
-% ====================
-% If you have N columns, choose \sepwidth and \colwidth such that
-% (N+1)*\sepwidth + N*\colwidth = \paperwidth
-\newlength{\sepwidth}
-\newlength{\colwidth}
-\setlength{\sepwidth}{0.025\paperwidth}
-\setlength{\colwidth}{0.3\paperwidth}
-
-\newcommand{\separatorcolumn}{\begin{column}{\sepwidth}\end{column}}
 
 % ====================
 % Title
 % ====================
 \title{Title}
-
 \author{Bardia Taghavi}
-
 \institute[shortinst]{Florida Atlantic University}
 
 % ====================
@@ -48,10 +31,9 @@
 \logoleft{\includegraphics[height=5.7cm]{Images/FAUCECS.png}\hspace{5cm}}
 % \logoright{\includegraphics[height=7cm]{Images/Florida Atlantic Owls.png}\hspace{5cm}}
 
-% ====================
+% =========================================
 % Body
-% ====================
-
+% =========================================
 \begin{document}
 
 \begin{frame}[t]
