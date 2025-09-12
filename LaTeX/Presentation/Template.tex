@@ -1,0 +1,102 @@
+\documentclass[final]{beamer}
+
+% ====================
+% Packages
+% ====================
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[orientation=lanscape,size=custom,width=121.92,height=91.44,scale=1.2]{beamerposter}
+\usetheme{BardiaTheme}
+\usecolortheme{BardiaColors}
+
+% ====================
+% Lengths
+% ====================
+% If you have N columns, choose \sepwidth and \colwidth such that
+% (N+1)*\sepwidth + N*\colwidth = \paperwidth
+\newlength{\sepwidth}
+\newlength{\colwidth}
+\setlength{\sepwidth}{0.025\paperwidth}
+\setlength{\colwidth}{0.3\paperwidth}
+
+\newcommand{\separatorcolumn}{\begin{column}{\sepwidth}\end{column}}
+
+% ====================
+% Title
+% ====================
+\title{Title}
+
+\author{Bardia Taghavi}
+
+\institute[shortinst]{Florida Atlantic University}
+
+% ====================
+% Footer (optional)
+% ====================
+\footercontent{
+  % \href{https://www.example.com}{https://www.example.com} 
+  \hfill
+  FAU COLLEGE OF ENGINEERING AND COMPUTER SCIENE
+  \hfill
+  % \href{mailto:staghavi2024@fau.edu}{staghavi2024@fau.edu}
+  }
+
+% ====================
+% Logo (optional)
+% ====================
+\logoleft{\includegraphics[height=5.7cm]{Images/FAUCECS.png}\hspace{5cm}}
+% \logoright{\includegraphics[height=7cm]{Images/Florida Atlantic Owls.png}\hspace{5cm}}
+
+% ====================
+% Body
+% ====================
+
+\begin{document}
+
+\begin{frame}[t]
+\begin{columns}[t]
+\separatorcolumn
+
+\begin{column}{\colwidth}
+  \begin{block}{Abstract}
+
+  \end{block}
+
+  \begin{block}{The Problem}
+    
+  \end{block}
+\end{column}
+
+\separatorcolumn
+
+\begin{column}{\colwidth}
+  \begin{block}{Our Solution}
+    
+  \end{block}
+\end{column}
+
+\separatorcolumn
+
+\begin{column}{\colwidth}
+  \begin{block}{Evaluation \& Results}
+
+  \end{block}
+
+  \begin{block}{Conclusion}
+
+  \end{block}
+
+\begin{block}{References}
+  \nocite{*}
+  \footnotesize{\bibliographystyle{ieeetr}\bibliography{Ref}}
+\end{block}
+
+\end{column}
+
+\separatorcolumn
+
+\end{columns}
+\end{frame}
+
+\end{document}

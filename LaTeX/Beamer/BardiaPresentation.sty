@@ -1,0 +1,343 @@
+% Packages:
+% Design:
+\usepackage[utf8]{inputenc}
+\usepackage{libertine, libertinust1math}
+\usepackage{inconsolata}
+\usepackage[T1]{fontenc}
+\usefonttheme{professionalfonts}
+\usepackage{amsmath,amssymb}
+
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{tikzmark}
+\usepackage[
+	activate={true,nocompatibility},
+	kerning,
+	tracking,
+	final,
+	factor=1100,
+	stretch=50,
+	shrink=10
+	]{microtype}
+
+% Floating Objects:
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+% \usepackage[noend]{algpseudocode}
+\usepackage{listings}
+\usepackage{multirow}
+\usepackage{makecell}
+
+% Symbols:
+\usepackage{pifont}
+\usepackage{bbding}
+\usepackage{soul}
+\usepackage{xfrac}
+\usepackage[makeroom]{cancel}
+
+% Other Packages:
+\usepackage{enumerate}
+% \usepackage{enumitem}
+\usepackage[document]{ragged2e}
+\usepackage{setspace}
+
+% Defining Colors:
+\usepackage{BardiaColors}
+
+% ==========================================================================
+% ==========================================================================
+
+% Beautiful Caligraphy:
+\DeclareFontFamily{OT1}{pzc}{}
+\DeclareFontShape{OT1}{pzc}{m}{it}{<-> s * [1.10] pzcmi7t}{}
+\DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
+
+% Other custom commands:
+\newcommand*\rfrac[2]{{}^{#1}\!/_{#2}}
+\newcommand{\pmods}[1]{\;(\text{mod}^\pm\; {#1})}
+\newcommand{\mods}[1]{\;\text{mod}^\pm\; {#1}}
+
+% Change slanted fonn to italic:
+\DeclareFontShape{T1}{iwona}{m}{sl}{<->ssub*iwona/m/it}{}
+\DeclareFontShape{T1}{iwona}{bx}{sl}{<->ssub*iwona/bx/it}{}
+
+% Last Beautifying:
+\hbadness=10000
+\vbadness=10000
+
+% Algorithm Stylings:
+\SetKwComment{Comment}{$\triangleright$\ }{}
+\SetCommentSty{small}
+\IncMargin{1em}
+
+
+% Codings and Listigs (Monospace Stuffs):
+\lstdefinestyle{MyTheme}{
+	basicstyle=\linespread{1.2}\ttfamily\small,
+	breakatwhitespace=false,
+	breaklines=false,
+	captionpos=b,
+	keepspaces=false,
+	numbers=none,
+	numbersep=5pt,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	frame=single,
+	frameshape={ryrRYR}{yY}{yY}{ryrRYR},
+	tabsize=2,
+	escapeinside={`}{`},
+	backgroundcolor=\color[rgb]{0.95,0.95,0.95},
+	commentstyle=\footnotesize\color{CommentColor},
+	numberstyle=\color{CadetBlue},
+	stringstyle=\color{BurntOrange},
+	rulecolor=\color{black},
+	keywordstyle=[1]{\itshape\bfseries\color{CtpLatteSapphire}},
+	keywordstyle=[2]{\bfseries\color{CtpLatteYellow}},
+	keywordstyle=[3]{\color{CtpLatteMaroon}},
+}
+\lstdefinestyle{Verilog}{
+	style=MyTheme,
+	language=Verilog,
+	otherkeywords={:, =, &, ^, |, @, [, ], !, ~, 'h, 'b, \#, \{, \}, \(, \)},
+	morekeywords=[1]{\$finish},
+	morekeywords=[2]{:, =, &, ^, |, @, !, ~, \#},
+	morekeywords=[3]{\{, \}, \(, \), [, ], 'h, , 'b}
+}
+\lstdefinestyle{C}{
+	style=MyTheme,
+	language=C,
+	otherkeywords={:, =, &, ^, |, @, [, ], !, ~, 'h, 'b, \#, \{, \}, \(, \)},
+	morekeywords=[1]{},
+	morekeywords=[2]{:, =, &, ^, |, @, !, ~, \#},
+	morekeywords=[3]{\{, \}, \(, \), [, ], 'h, , 'b}
+}
+\lstdefinestyle{Python}{
+	style=MyTheme,
+	language=Python,
+	otherkeywords={:, =, &, ^, *, +, -, /, |, @, [, ], !, ~, \{, \}, \(, \), 0x},
+	morekeywords=[1]{},
+	morekeywords=[2]{:, =, &, ^, *, +, -, /, |, @, !, ~, },
+	morekeywords=[3]{\{, \}, \(, \), [, ], 0x}
+}
+\lstset{style=MyTheme}
+
+\renewcommand\lstlistingname{Code}
+\newcommand{\code}[1]{\colorbox[rgb]{0.9,0.9,0.9}{\smaller\texttt{#1}}}
+\newcommand{\timescale}{{\itshape\color{CtpLatteBlue}{\textasciigrave}timescale}}
+\newcommand{\NC}[1]{\footnotesize\textcolor{CommentColor}{#1}} % Normal Comment
+
+% Center and round the image:
+\newsavebox{\imagebox}
+\newcommand{\CenteredRoundedImage}[2][width=0.7\textwidth]{%
+    \begin{center}%
+        \sbox{\imagebox}{\includegraphics[#1]{#2}}%
+        \begin{tikzpicture}%
+            \node[
+                inner sep=0,
+                rounded corners=1ex,
+                minimum width=\wd\imagebox,
+                minimum height=\ht\imagebox,
+                path picture={
+                    \node at (path picture bounding box.center) {\usebox{\imagebox}};
+                }
+            ] {};
+        \end{tikzpicture}%
+    \end{center}%
+}
+
+% ---------------------------------
+% Beamer Packages:
+\usetheme[titleformat=smallcaps, progressbar=foot]{moloch}
+\usepackage{appendixnumberbeamer}
+
+\setbeamersize{text margin left=0.5cm, text margin right=0.5cm}
+\setbeamertemplate{section in toc}[sections numbered]
+
+% Figures without "figure 1:..."
+\captionsetup{labelformat=empty, font={it,scriptsize}}
+
+% Customizing Moloch Theme
+\setbeamercolor{background canvas}{bg=white}
+\setbeamercolor{frametitle}{bg=CtpLatteSapphire, fg=WhiteText}
+\setbeamercolor{progress bar}{fg=CtpLatteGreen, bg=CtpMochaCrust}
+\setbeamercolor{title separator}{fg=CtpLatteRed}
+\setbeamercolor{structure}{fg=CtpLatteRed}
+\setbeamercolor{title}{fg=CtpLatteSapphire}
+\setbeamerfont{frametitle}{size=\Large}
+\setbeamercolor{normal text}{fg=CtpMochaCrust}
+\setlength{\moloch@progressinheadfoot@linewidth}{2pt}
+\setlength{\moloch@progressonsectionpage@linewidth}{2pt}
+
+% Itemize:
+\setbeamertemplate{itemize item}{\ding{71}}
+\setbeamertemplate{itemize subitem}{$\triangleright$}
+\setbeamertemplate{itemize subsubitem}{$\circ$}
+
+% Table of Contents:
+\setbeamertemplate{sections/subsections in toc}[square]
+\setbeamercolor{section number projected}{bg=CtpLatteSubText1,fg=CtpMochaText}
+\setbeamercolor{subsection number projected}{bg=CtpLatteSubText1,fg=CtpMochaText}
+
+
+% Makes all fonts the same size
+\setbeamerfont{itemize/enumerate body}{size=\normalsize}
+\setbeamerfont{itemize/enumerate subbody}{size=\normalsize}
+\setbeamerfont{itemize/enumerate subsubbody}{size=\normalsize}
+
+\setbeamertemplate{blocks}[rounded]
+\setbeamercolor{block body}{bg=CtpMochaGreen, fg=CtpMochaCrust}
+\setbeamercolor{block title}{bg=CtpMochaGreen, fg=CtpMochaCrust}
+\setbeamercolor{block body example}{bg=CtpMochaSky, fg=CtpMochaCrust}
+\setbeamercolor{block title example}{bg=CtpMochaText,fg=CtpMochaCrust}
+\setbeamercolor{block body alerted}{bg=CtpLatteYellow, fg=WhiteText}
+\setbeamercolor{block title alerted}{bg=CtpLatteYellow, fg=WhiteText}
+
+\setbeamertemplate{title separator}{
+	\begin{center}
+		\rule{\linewidth}{1pt}
+	\end{center}
+}
+
+\makeatletter
+\AtBeginEnvironment{exampleblock}{%
+	\setbeamercolor{itemize item}{fg=CtpMochaCrust}
+	\setbeamercolor{itemize subitem}{fg=CtpMochaCrust}
+	\setbeamercolor{itemize subsubitem}{fg=CtpMochaCrust}
+}
+\makeatother
+
+
+% Beautiful animation:
+% Save the algorithm counter:
+\newcounter{algocounteratalgbegin}
+\AtBeginEnvironment{algorithm}{%
+	\setcounter{algocounteratalgbegin}{\value{algocf}}%
+}
+% Save the original \includegraphics command
+\let\oldincludegraphics\includegraphics
+% Fade in an image:
+\newcommand{\fadedincludegraphics}[2][]{%
+	\begin{tikzpicture}
+		\begin{scope}[transparency group, opacity=0.1]
+			\node[inner sep=0] (image) at (0,0) {\oldincludegraphics[#1]{#2}};
+		\end{scope}
+		\begin{scope}[blend mode=color]
+			\fill[FadeOverlay] (image.south west) rectangle (image.north east);
+		\end{scope}
+	\end{tikzpicture}%
+}
+% Fade Command:
+\newcommand{\fade}[1]{
+	\color<-#1>{FadeOverlay}%
+	\only<-#1>{%
+		\setbeamercolor{itemize item}{fg=FadeOverlay}%
+		\setbeamercolor{itemize subitem}{fg=FadeOverlay}%
+		\setbeamercolor{itemize subsubitem}{fg=FadeOverlay}%
+		\hypersetup{%
+			citecolor=FadeOverlay,%
+			linkcolor=FadeOverlay,%
+			urlcolor=FadeOverlay%
+		}%
+		\let\includegraphics\fadedincludegraphics %Images
+		% Blocks:
+		\setbeamercolor{block title}{fg=FadeOverlay,bg=WhispCloudGray}%
+		\setbeamercolor{block body}{fg=FadeOverlay,bg=WhispCloudGray}%
+		\setbeamercolor{block title example}{fg=FadeOverlay,bg=WhispCloudGray}%
+		\setbeamercolor{block body example}{fg=FadeOverlay,bg=WhispCloudGray}%
+		\setbeamercolor{block title alerted}{fg=FadeOverlay,bg=WhispCloudGray}%
+		\setbeamercolor{block body alerted}{fg=FadeOverlay,bg=WhispCloudGray}%
+	}%
+
+	\color<#1->{CtpMochaCrust}%
+	\only<#1->{%
+		\setbeamercolor{itemize item}{fg=CtpLatteRed}%
+		\setbeamercolor{itemize subitem}{fg=CtpLatteRed}%
+		\setbeamercolor{itemize subsubitem}{fg=CtpLatteRed}%
+		\hypersetup{%
+			citecolor=CtpLatteBlue,%
+			linkcolor=CtpLatteRed,%
+			urlcolor=CtpLatteBlue%
+		}%
+		\let\includegraphics\oldincludegraphics
+		\setbeamercolor{block body}{bg=CtpMochaGreen, fg=CtpMochaCrust}%
+		\setbeamercolor{block title}{bg=CtpMochaGreen, fg=CtpMochaCrust}%
+		\setbeamercolor{block body example}{bg=CtpMochaSky, fg=CtpMochaCrust}%
+		\setbeamercolor{block title example}{bg=CtpMochaText,fg=CtpMochaCrust}%
+		\setbeamercolor{block body alerted}{bg=CtpLatteYellow, fg=WhiteText}%
+		\setbeamercolor{block title alerted}{bg=CtpLatteYellow, fg=WhiteText}%
+	}%
+}
+
+% Removing Edges:
+\makeatletter
+\define@key{beamerframe}{t}[true]{% top
+	\beamer@frametopskip=0.1cm plus .5\paperheight\relax%
+	\beamer@framebottomskip=0pt plus 1fill\relax%
+	\beamer@frametopskipautobreak=\beamer@frametopskip\relax%
+	\beamer@framebottomskipautobreak=\beamer@framebottomskip\relax%
+}
+\makeatother
+
+% Put something (like an image) at the bottom of the page.
+\newcommand{\placeimageatbottom}[1]{
+    \begin{tikzpicture}[remember picture, overlay]
+        \node[anchor=south] at (current page.south)
+        {
+            \includegraphics[width=0.5\textwidth]{#1}
+        };
+    \end{tikzpicture}
+}
+
+% Standout Slide:
+\newcommand{\standout}[1]{
+	{
+    \setbeamercolor{background canvas}{bg=white}
+    \begin{frame}[plain, c]
+        \begin{tikzpicture}[remember picture, overlay]
+            \fill[CtpLatteRed] (current page.south west) rectangle ++(0.07\paperwidth, \paperheight);
+            \fill[CtpLatteRed] (current page.south east) rectangle ++(-0.07\paperwidth, \paperheight);
+        \end{tikzpicture}
+        \yellowblock{0.85\textwidth}{}{
+			\Huge\textbf{\\[1ex]#1\vspace{1em}}
+			}
+    \end{frame}
+	}
+}
+
+% Blocks:
+\newcommand{\blueblock}[3]{
+	\begin{center}
+		\begin{minipage}{#1}
+			\begin{exampleblock}{#2}
+				\centering
+				#3
+			\end{exampleblock}
+		\end{minipage}
+	\end{center}
+}
+
+\newcommand{\greenblock}[3]{
+	\begin{center}
+		\begin{minipage}{#1}
+			\begin{block}{#2}
+				\centering
+				#3
+			\end{block}
+		\end{minipage}
+	\end{center}
+}
+
+\newcommand{\yellowblock}[3]{
+	\begin{center}
+		\begin{minipage}{#1}
+			\begin{alertblock}{#2}
+				\centering
+				#3
+			\end{alertblock}
+		\end{minipage}
+	\end{center}
+}
