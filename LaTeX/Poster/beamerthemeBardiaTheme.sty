@@ -37,6 +37,13 @@
 \DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
 
 \newcommand{\code}[1]{\colorbox[rgb]{0.9,0.9,0.9}{\smaller\texttt{#1}}}
+\hbadness=10000
+\vbadness=10000
+
+% Justify all text
+\setbeamertemplate{blocks}[justified]
+\raggedright
+\let\raggedright\justifying
 
 \setbeamerfont{headline}{family=}
 \setbeamerfont{headline title}{size=\Huge,series=\bfseries}
@@ -53,9 +60,9 @@
 % ====================
 % List
 \def\@listi{\leftmargin\leftmargini
-\topsep 1ex % spacing before
+\topsep -0.5ex % spacing before
 \parsep 0\p@ \@plus\p@
-\itemsep 0.5ex} % spacing between
+\itemsep 0.25ex} % spacing between
 
 % Itemize
 \setbeamertemplate{itemize item}{\ding{71}}
@@ -81,6 +88,25 @@
 
 % Navigation
 \beamertemplatenavigationsymbolsempty
+
+% Center and round the image:
+\newsavebox{\imagebox}
+\newcommand{\CenteredRoundedImage}[2][width=0.7\textwidth]{%
+    \begin{center}%
+        \sbox{\imagebox}{\includegraphics[#1]{#2}}%
+        \begin{tikzpicture}%
+            \node[
+                inner sep=0,
+                rounded corners=1ex,
+                minimum width=\wd\imagebox,
+                minimum height=\ht\imagebox,
+                path picture={
+                    \node at (path picture bounding box.center) {\usebox{\imagebox}};
+                }
+            ] {};
+        \end{tikzpicture}%
+    \end{center}%
+}
 
 % ====================
 % Components

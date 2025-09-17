@@ -1,8 +1,5 @@
 \documentclass[final]{beamer}
 
-% ====================
-% Packages
-% ====================
 \usepackage[orientation=lanscape,size=custom,width=121.92,height=91.44,scale=1]{beamerposter}
 \usetheme{BardiaTheme}
 \usecolortheme{BardiaColors}
@@ -10,30 +7,32 @@
 % ====================
 % Title
 % ====================
-\title{Title}
-\author{Bardia Taghavi}
+\title{}
+\author{Bardia Taghavi, Prof. Reza Azarderakhsh}
 \institute[shortinst]{Florida Atlantic University}
 
 % ====================
 % Footer (optional)
 % ====================
 \footercontent{
-  % \href{https://www.example.com}{https://www.example.com} 
+  % \href{https://www.example.com}{https://www.example.com}
+  Bardia Taghavi
   \hfill
   FAU COLLEGE OF ENGINEERING AND COMPUTER SCIENE
   \hfill
-  % \href{mailto:staghavi2024@fau.edu}{staghavi2024@fau.edu}
-  }
+  \href{mailto:staghavi2024@fau.edu}{staghavi2024@fau.edu}
+}
 
 % ====================
 % Logo (optional)
 % ====================
-\logoleft{\includegraphics[height=5.7cm]{Images/FAUCECS.png}\hspace{5cm}}
+% \logoleft{\includegraphics[height=5.7cm]{Images/FAUCECS.png}\hspace{5cm}}
 % \logoright{\includegraphics[height=7cm]{Images/Florida Atlantic Owls.png}\hspace{5cm}}
 
 % =========================================
 % Body
 % =========================================
+
 \begin{document}
 
 \begin{frame}[t]
@@ -41,43 +40,65 @@
 \separatorcolumn
 
 \begin{column}{\colwidth}
-  \begin{block}{Abstract}
+
+  \begin{block}{Introduction \& Motivation}
 
   \end{block}
-
-  \begin{block}{The Problem}
-    
+  % ----------------------------
+  \begin{block}{High-Performance: ParallelNTT}
+  
   \end{block}
-\end{column}
+  % ----------------------------
+  \begin{block}{ParallelNTT Hardware Design}
 
-\separatorcolumn
-
-\begin{column}{\colwidth}
-  \begin{block}{Our Solution}
-    
   \end{block}
 \end{column}
 
+% --------------------------------------------------------
 \separatorcolumn
+% --------------------------------------------------------
 
 \begin{column}{\colwidth}
-  \begin{block}{Evaluation \& Results}
+
+  \begin{block}{Lightweight Solutions}
 
   \end{block}
+  % ----------------------------
+  \begin{block}{LightNTT Hardware Design}
+    
+  \end{block}
+  % ----------------------------
+  \begin{block}{Key Results}
+  
+  \end{block}
+\end{column}
 
-  \begin{block}{Conclusion}
+% --------------------------------------------------------
+\separatorcolumn
+% --------------------------------------------------------
 
+\begin{column}{\colwidth}
+
+  \begin{block}{Contributions \& Impact}
+
+  \end{block}
+  % ----------------------------
+  \begin{block}{Future Work and Next Steps}
+
+  \end{block}
+  % ----------------------------
+  \begin{block}{Acknowledgements}
+  Generously supported by NSF RINGS. Thank you to my advisor, Prof. Reza Azarderakhsh, for his guidance and support.
   \end{block}
 
 \begin{block}{References}
   \nocite{*}
-  \footnotesize{\bibliographystyle{ieeetr}\bibliography{Ref}}
+  \footnotesize{\bibliographystyle{ieeetr}\bibliography{Refs}}
 \end{block}
 
 \end{column}
 
 \separatorcolumn
-
 \end{columns}
 \end{frame}
 
