@@ -2,14 +2,6 @@
 
 set -euo pipefail
 
-echo -n "Enter old font family (e.g., Linux Libertine): "
-IFS= read -r OLD_FONT
-
-if [ -z "${OLD_FONT// }" ]; then
-  echo "Error: font family cannot be empty." >&2
-  exit 1
-fi
-
 echo -n "Enter new font family (e.g., Linux Libertine): "
 IFS= read -r NEW_FONT
 
@@ -19,21 +11,17 @@ if [ -z "${NEW_FONT// }" ]; then
 fi
 
 # 1) GTK settings
-GTK_FILE="$PWD/GTK/GTK3.0/settings.ini"
-sed -i "s/${OLD_FONT}/${NEW_FONT}/g" "$GTK_FILE"
+gsettings set org.gnome.desktop.interface font-name "$NEW_FONT 10"
 
 # 2) Hyprland Hyprpmbars
-HYPR_PREFS_FILE="$PWD/Hyprland/userprefs.conf"
-sed -i "s/${OLD_FONT}/${NEW_FONT}/g" "$HYPR_PREFS_FILE"
+sed -i "s/bar_text_font = .*/bar_text_font = ${NEW_FONT}/g" "$HOME/.config/hypr/userprefs.conf"
 
 # 3) Hyprland Waybar
-HYPR_CSS_FILE="$PWD/Hyprland/user-style.css"
-sed -i "s/${OLD_FONT}/${NEW_FONT}/g" "$HYPR_CSS_FILE"
+sed -i "s/font-family: \".*\"/font-family: \"${NEW_FONT}\"/g" "$HOME/.config/waybar/user-style.css"
 
 # 4) KDE kdeglobals
-KDE_FILE="$PWD/KDE/kdeglobals"
-sed -i "s/${OLD_FONT}/${NEW_FONT}/g" "$KDE_FILE"
+sed -i "s/font=.*,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1/font=${NEW_FONT},10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1/g" "$HOME/.config/kdeglobals"
 
-echo "Done. Updated font family to: $NEW_FONT"
+echo "✅ Done. Updated font family to: $NEW_FONT"
 
 

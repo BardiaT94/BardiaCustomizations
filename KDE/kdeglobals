@@ -106,7 +106,7 @@ ForegroundVisited=77,0,250
 
 [Colors:View]
 BackgroundAlternate=20,26,33
-BackgroundNormal=22,25,37
+BackgroundNormal=#312830FF
 DecorationFocus=109,188,220
 DecorationHover=109,188,209
 ForegroundActive=0,193,228
@@ -138,8 +138,12 @@ XftHintStyle=hintslight
 XftSubPixel=none
 font=Exo 2,10,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
 
+[Icons]
+Theme=Tela-circle-dracula
+
 [KDE]
 LookAndFeelPackage=CachyOS-Nord
+widgetStyle=kvantum
 
 [KFileDialog Settings]
 Allow Expansion=false

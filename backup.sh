@@ -8,7 +8,7 @@
 echo "🚀 Starting backup..."
 
 echo "Removing existing backup directory..."
-rm -rf "$PWD/.fonts"
+rm -rf "$PWD/Fonts"
 rm -rf "$PWD/Hyprland"
 rm -rf "$PWD/InkScape"
 rm -rf "$PWD/Kitty"
@@ -29,6 +29,7 @@ mkdir -p "$PWD/GTK"
 mkdir -p "$PWD/Thunar"
 mkdir -p "$PWD/KDE"
 mkdir -p "$PWD/Spicetify"
+mkdir -p "$PWD/Fonts"
 
 echo "Copying Hyprland customizations..."
 cp -f "$HOME/.config/hypr/userprefs.conf" "$PWD/Hyprland/"
@@ -39,7 +40,7 @@ cp -f "$HOME/.local/share/waybar/layouts/hyprdots/BardiaWaybar.jsonc" "$PWD/Hypr
 cp -f "$HOME/.config/waybar/user-style.css" "$PWD/Hyprland/"
 
 echo "Copying Fonts folder..."
-cp -rf "$HOME/.fonts" "$PWD/"
+cp -rf "$HOME/.fonts/." "$PWD/Fonts"
 
 echo "Copying InkScape palettes..."
 cp -rf "$HOME/.config/inkscape/palettes" "$PWD/InkScape"
@@ -56,7 +57,6 @@ cp -rf "$HOME/Desktop/MyPresentations/Templates/." "$PWD/LaTeX"
 
 echo "Copying GTK themes..."
 cp -rf "$HOME/.themes" "$PWD/GTK"
-cp -rf "$HOME/.config/gtk-3.0/." "$PWD/GTK/GTK3.0"
 
 echo "Copying Thunar customizations..."
 cp -rf "$HOME/.config/Thunar" "$PWD"

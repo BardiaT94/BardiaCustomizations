@@ -15,7 +15,7 @@ cp -f "$PWD/Hyprland/monitors.conf" "$HOME/.config/hypr/"
 cp -f "$PWD/Hyprland/user-style.css" "$HOME/.config/waybar/"
 
 echo "Restoring Fonts folder..."
-cp -rf "$PWD/.fonts" "$HOME"
+cp -rf "$PWD/Fonts/." "$HOME/.fonts"
 
 echo "Restoring InkScape palettes..."
 cp -rf "$PWD/InkScape/palettes" "$HOME/.config/inkscape/"
@@ -33,7 +33,6 @@ cp -rf "$PWD/LaTeX/." "$HOME/Desktop/MyPresentations/Templates/"
 
 echo "Restoring GTK themes..."
 cp -rf "$PWD/GTK/.themes" "$HOME"
-cp -rf "$PWD/GTK/GTK3.0/." "$HOME/.config/gtk-3.0"
 
 echo "Restoring Thunar customizations..."
 cp -rf "$PWD/Thunar" "$HOME/.config"
