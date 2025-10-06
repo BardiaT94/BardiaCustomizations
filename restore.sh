@@ -27,10 +27,6 @@ echo "Restoring Xilinx themes and waveform..."
 cp -rf "$PWD/Xilinx/themes/" "$HOME/.Xilinx/Vivado/2025.1"
 cp -rf "$PWD/Xilinx/waveform/" "$HOME/.Xilinx/Vivado/2025.1"
 
-echo "Restoring LaTeX templates..."
-mkdir -p "$HOME/Desktop/MyPresentations/Templates"
-cp -rf "$PWD/LaTeX/." "$HOME/Desktop/MyPresentations/Templates/"
-
 echo "Restoring GTK themes..."
 cp -rf "$PWD/GTK/.themes" "$HOME"
 

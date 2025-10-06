@@ -1,0 +1,545 @@
+\documentclass[
+	10pt, t,
+	hyperref={
+		colorlinks,
+		citecolor=CtpLatteTeal,
+		linkcolor=CtpLatteTeal,
+		urlcolor=CtpLatteBlue,
+		pdfauthor={Bardia Taghavi},
+		pdftitle={LightNTT: A Tiny NTT/iNTT Core for ML-DSA Featuring a Constant-Geometry Pipelined Design},
+		pdfsubject={Cryptography},
+		pdfkeywords={NTT, iNTT, ML-DSA, Constant-Geometry Pipelined Design},
+		pdfcreator={Bardia Taghavi},
+		pdfproducer={Bardia Taghavi}
+		},
+	aspectratio=1610,
+	]
+	{beamer}
+
+\usepackage{BardiaPresentation}
+
+\titlegraphic{
+	\includegraphics[height=1cm]{Images/Florida Atlantic Owls.png}
+	\vspace{2em}
+}
+
+\title{{LightNTT: A Tiny NTT/iNTT Core for ML-DSA Featuring a Constant-Geometry Pipelined Design}}
+\author{B\texorpdfstring{ardia Taghavi$^{1}$, Reza Azarderakhsh$^{1}$, Mehran Mozaffari Kermani$^{2}$}{Lg}}
+\institute{
+	$^{1}$Florida Atlantic University, Boca Raton, FL, USA\\
+	$^{2}$University of South Florida, Tampa, FL, USA\\
+}
+\date{Sep 1, 2025}
+
+\begin{document}
+
+\begin{frame}[plain]
+    \maketitle
+    \begin{tikzpicture}[overlay, remember picture]
+        \node[anchor=south, fill=CtpLatteRed, minimum width=\paperwidth, text width=\paperwidth, align=center] at (current page.south) {
+            \color{WhiteText}
+            \footnotesize\textbf{LightSEC2025, Beşiktaş, İstanbul, Türkiye}
+        };
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}[plain]{Topics}
+	\tableofcontents
+\end{frame}
+
+\setcounter{framenumber}{0}
+
+% *==================================================================
+% *==================================================================
+
+\section{Introduction}
+\subsection{The Quantum Threat \& The Need for PQC}
+\begin{frame}{The Quantum Threat \& The Need for PQC}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{itemize}\setlength{\itemsep}{2ex}
+				\item \textbf{The Threat}: Quantum computers running algorithms like Shor's can break the cryptography that secures our digital world today (e.g., RSA \& ECC).
+				\fade{2}
+				\item \textbf{The Solution}: We must transition to Post-Quantum Cryptography (PQC), which is resistant to attacks from both classical and quantum computers.
+				\fade{3}
+				\item \textbf{A Leading Candidate}: Module-Lattice-Based Cryptography (MLBC) offers strong security and efficiency.
+			\end{itemize}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\CenteredRoundedImage[width=0.9\textwidth]{Images/QuantumComp.png}
+		\end{column}
+	\end{columns}
+	
+\end{frame}
+% ?----------------------------------
+\subsection{The Bottleneck in Lattice-Based Cryptosystems}
+\begin{frame}{The Bottleneck in Lattice-Based Crypto}
+	\begin{itemize}\setlength{\itemsep}{2ex}
+		\item MLBC schemes like \textbf{ML-DSA} rely heavily on polynomial multiplication.
+		\begin{itemize}\vspace{1ex}
+			\item MLBC schemes are based on lattices, where the basis vectors are from ring of polynomials $\mathcal{R}_q = \mathbb{Z}_q[x]/(x^n+1)$, where $q = 8380417$ (23 bits) is a prime number and $n = 256$ is the degree of the polynomial for ML-DSA.
+		\end{itemize}
+		\fade{2}
+		\item This operation is the most computationally intensive part and can be a major performance bottleneck, especially on small devices.
+
+	\end{itemize}
+	\fade{2}
+	\begin{figure}
+		\includegraphics[width=0.53\textwidth]{Images/ML-DSA High-Level Overview.pdf}
+		\caption{\textcolor<-1>{FadeOverlay}{Simplified High-Level Overview of ML-DSA}}
+	\end{figure}
+\end{frame}
+% ?----------------------------------
+\subsection{The Solution: NTT}
+\begin{frame}{The Solution: NTT}
+	\begin{itemize}\setlength{\itemsep}{2ex}
+		\item \textbf{The Solution}: Number Theoretic Transform (NTT) is a highly efficient method for performing polynomial multiplication.
+		\begin{itemize}\vspace{1ex}
+			\item It converts polynomials into a different domain where multiplication is much faster (pointwise).
+			\vspace{1ex}
+		\end{itemize}
+			\fade{2}
+			\includegraphics[width=0.9\textwidth]{Images/PolyMult.pdf}
+			\vspace{1ex}
+		\begin{itemize}
+			\fade{2}
+			\item Then, $c = \text{iNTT}(\hat{c})$ is the result of the polynomial multiplication.
+			\end{itemize}
+		\end{itemize}
+\end{frame}
+% ?----------------------------------
+\begin{frame}{The Solution: NTT}
+	\begin{itemize}\setlength{\itemsep}{2ex}
+		\item ML-DSA requires the use of NTT and iNTT for every polynomial multiplication.
+		\item Steps are NTT transformation of polynomials and vectors of polynomials, pointwise multiplication (PWM) in NTT domain, and iNTT transformation.
+		\vspace{1.5em}
+		\end{itemize}
+		\begin{center}
+			\includegraphics[width=0.95\textwidth]{Images/ML-DSA High-Level OverviewNTT.pdf}
+		\end{center}
+
+\end{frame}
+% ?----------------------------------
+\subsection{The Challenge: NTT on Constrained Devices}
+\begin{frame}{The Challenge: NTT on Constrained Devices}
+	\begin{itemize}\setlength{\itemsep}{2ex}
+		\item Implementing NTT in hardware is challenging for resource-constrained devices like \textbf{IoT sensors}, \textbf{smart cards}, and \textbf{embedded systems}.
+		\fade{2}
+		\item The core challenge is balancing the design trade-offs.
+		\vspace{1em}
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\begin{figure}
+					\includegraphics[width=0.5\textwidth]{Images/TradeOff.pdf}
+					\caption{\textcolor<-1>{FadeOverlay}{Design Trade-Offs}}
+				\end{figure}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{figure}
+					\only<-2>{
+						\includegraphics[width=1\textwidth]{Images/NTTShare1.pdf}
+					}
+					\only<3>{
+						\includegraphics[width=1\textwidth]{Images/NTTShare2.pdf}
+					}
+					\caption{\textcolor<-1>{FadeOverlay}{Dynamic Power Consumption of Different Blocks of ML-DSA}}
+				\end{figure}
+			\end{column}
+		\end{columns}
+	\end{itemize}
+\end{frame}
+% ?----------------------------------
+\subsection{Our Solution: Introducing LightNTT}
+\begin{frame}{Our Solution: Introducing LightNTT}
+	\begin{itemize}\setlength{\itemsep}{2ex}
+		\item This paper introduces \textbf{LightNTT}, a high-efficiency NTT/iNTT core specifically designed for \textbf{ML-DSA} on constrained devices.
+		\fade{2}
+		\item \textbf{Key Design Principles}:
+		\vspace{1ex}
+		\begin{center}
+			\includegraphics[width=0.48\textwidth]{Images/Design Principles.pdf}
+		\end{center}
+	\end{itemize}
+\end{frame}
+
+% *==================================================================
+
+\section{Architecture}
+\subsection{Core Architecture 1: Constant-Geometry (CG)}
+\begin{frame}{Core Architecture 1: Constant-Geometry (CG)}
+	\begin{itemize}\setlength{\itemsep}{1.5em}
+		\item In a typical NTT, the data access pattern changes at every stage, which complicates the control logic.
+		\fade{2}
+		\item Our \textcolor<2->{CtpLatteBlue}{\textbf{Constant-Geometry (CG)}} architecture maintains a fixed memory access pattern throughout the computation.
+		\fade{3}
+		\item \textbf{Benefits}:
+		\begin{itemize}\setlength{\itemsep}{2ex}\vspace{1ex}
+			\fade{3}
+			\item Radically simplifies control logic, saving area.
+			\item The regular data flow is inherently more resistant to memory-based side-channel attacks.
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+% ?----------------------------------
+\begin{frame}{Core Architecture 1: Constant-Geometry (CG) Dataflow}
+	\begin{itemize}\setlength{\itemsep}{1.5em}
+		\item The spacing between the pairs of butterflies is fixed:
+		\begin{itemize}\vspace{1ex}
+			\item NTT: Reads from $a_i$ and $a_{n/2+i}$, writes into $a_{2i}$ and $a_{2i+1}$.
+			\item iNTT: Reads from $a_{2i}$ and $a_{2i+1}$, writes into $a_i$ and $a_{n/2+i}$.
+		\end{itemize}
+	\end{itemize}
+	\begin{figure}
+		\includegraphics[width=0.47\textwidth]{Images/NTT.pdf}
+		\hspace{1em}
+		\includegraphics[width=0.48\textwidth]{Images/iNTT.pdf}
+		\caption{(a) NTT \hspace{23em} (b) iNTT}
+	\end{figure}
+\end{frame}
+% ?----------------------------------
+\begin{frame}{Constant-Geometry (CG) NTT Dataflow}
+	\begin{center}
+		\only<1>{
+			\begin{flushleft}
+				\textcolor{CtpLatteRed}{\ding{71}} \large{Overview}:
+			\end{flushleft}
+			\vspace{3ex}
+			\includegraphics[width=0.7\textwidth]{Images/Dataflow.pdf}
+			}
+		\only<2>{
+			\begin{flushleft}
+				\textcolor{CtpLatteRed}{\ding{71}} \large{Stage 1 - Iteration 1}: Reads from 0 ,4; Writes to 0, 1. 
+			\end{flushleft}
+			\vspace{2em}
+			\includegraphics[width=0.55\textwidth]{Images/Dataflow1.pdf}
+			}
+		\only<3>{
+			\begin{flushleft}
+				\textcolor{CtpLatteRed}{\ding{71}} \large{Stage 1 - Iteration 2}: Reads from 1, 5; Writes into 2, 3. 
+			\end{flushleft}
+			\vspace{2em}\hspace{-0.65em}
+			\includegraphics[width=0.55\textwidth]{Images/Dataflow2.pdf}
+			}
+		\only<4>{
+			\begin{flushleft}
+				\textcolor{CtpLatteRed}{\ding{71}} \large{Stage 1 - Iteration 3}: Reads from 2, 6; Writes into 4, 5. 
+			\end{flushleft}
+			\vspace{2em}\hspace{-1em}
+			\includegraphics[width=0.55\textwidth]{Images/Dataflow3.pdf}
+			}
+		\only<5>{
+			\begin{flushleft}
+				\textcolor{CtpLatteRed}{\ding{71}} \large{Stage 1 - Iteration 4}: Reads from 3, 7; Writes into 6, 7. 
+			\end{flushleft}
+			\vspace{2em}\hspace{-1.3em}
+			\includegraphics[width=0.55\textwidth]{Images/Dataflow4.pdf}
+			}
+		\only<6>{
+			\begin{flushleft}
+				\textcolor{CtpLatteRed}{\ding{71}} \large{Stage 2 - Iteration 1}: Reads from 0, 4; Writes into 0, 1, again. 
+			\end{flushleft}
+			\vspace{2em}\hspace{-1.7em}
+			\includegraphics[width=0.55\textwidth]{Images/Dataflow5.pdf}
+			}
+	\end{center}
+\end{frame}
+% ?----------------------------------
+\subsection{Core Architecture 2: Efficient Memory}
+\begin{frame}{Core Architecture 2: Efficient Memory}
+	\begin{itemize}\setlength{\itemsep}{1em}
+		\item To keep the pipeline full and avoid conflicts, we use a \textbf{ping-pong memory} architecture:
+		\begin{itemize}\vspace{1ex}
+			\item Two dual-port Block RAMs (BRAMs).
+		\end{itemize}
+		\item While one BRAM is being read from to feed the butterfly unit, the other is being written to with the results from the previous stage. This process then alternates at the end of each stage.
+		\item This ensures fast, conflict-free memory access that sustains the pipeline's efficiency.
+	\end{itemize}
+	\begin{figure}
+		\only<1>{
+			\begin{figure}
+				\includegraphics[width=0.85\textwidth]{Images/PingPong RAM NTT.pdf}
+				\caption{RAM Bank during NTT}
+			\end{figure}
+		}
+		\only<2>{
+			\begin{figure}
+				\includegraphics[width=0.85\textwidth]{Images/PingPong RAM INTT.pdf}
+				\caption{RAM Bank during iNTT}
+			\end{figure}
+		}
+	\end{figure}
+\end{frame}
+% ?----------------------------------
+\subsection{Core Architecture 3: Pipelined Architecture}
+\begin{frame}{Core Architecture 3: Pipelined Architecture}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{itemize}\setlength{\itemsep}{1em}
+				\item The "\textit{butterfly unit}" is the core computational unit in the NTT algorithm.
+				\item We use a single, unified butterfly unit that handles both NTT and its inverse (iNTT), significantly reducing area.
+				\fade{2}
+				\item This unit is deeply pipelined, allowing us to process data continuously and achieve high performance with minimal hardware.
+				\item Number of Clock Cycles: \[(\dfrac{n}{2} + 4) \cdot \log_2 n = 1056.\]
+			\end{itemize}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\begin{center}
+				\includegraphics[width=0.5\textwidth]{Images/BFU.pdf}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+% ?----------------------------------
+\begin{frame}{Core Architecture 3: Pipelined Architecture}
+	\begin{figure}
+		\only<1>{
+			\begin{itemize}\setlength{\itemsep}{1ex}
+				\item \textbf{Pipeline during NTT}: 3 clocks at first, 1 clock at the end, for the pipeline latency.
+				\item The rest of the pipeline (n/2 steps) is done, each in one clock cycle.
+			\end{itemize}
+			\vspace{1.5ex}
+			\includegraphics[width=0.52\textwidth]{Images/PipelineNTT.pdf}
+		}
+		\only<2>{
+			\begin{itemize}\setlength{\itemsep}{1ex}
+				\item \textbf{Pipeline during iNTT}: 3 clocks at first, 1 clock at the end, for the pipeline latency.
+				\item The rest of the pipeline (n/2 steps) is done, each in one clock cycle.
+			\end{itemize}
+			\vspace{1.5ex}
+			\includegraphics[width=0.65\textwidth]{Images/PipelineINTT.pdf}
+		}
+	\end{figure}
+\end{frame}
+
+% ?----------------------------------
+\subsection{Core Architecture 4: Optimized Modular Arithmetic}
+\begin{frame}{Core Architecture 4: Modular Addition and Subtraction}
+	\begin{itemize}\setlength{\itemsep}{1.5em}
+		\item Modular addition and subtraction are quite straightforward.
+		\item The only tricky part is multiplying by $2^{-1} \bmod q$ in iNTT after each stage.
+		\begin{minipage}{0.5\textwidth}
+			\vspace{1em}
+			\setcounter{algocf}{\value{algocounteratalgbegin}}
+			\fade{2}
+			\begin{algorithm}[H]
+				\DontPrintSemicolon
+				\KwIn{$a \in \mathbb{Z}_q$}
+				\KwOut{$out = 2^{-1} \cdot a \pmod q$}
+				$out \gets a[0] \;?\; a \gg 1 : (a+q) \gg 1$\;
+				\caption{Multiply by $2^{-1} \pmod q$}
+				\label{alg:mul2inv}
+			\end{algorithm}
+
+		\end{minipage}
+		\begin{itemize}\setlength{\itemsep}{1ex}\vspace{1ex}
+			\fade{2}
+			\item If $a$ is even, just divide by 2.
+			\item If $a$ is odd, add $q$ and then divide by 2.
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+% ?----------------------------------
+\begin{frame}{Core Architecture 4: Modular Addition and Subtraction}
+	\begin{itemize}\setlength{\itemsep}{1ex}
+		\item This hardware can be used for both NTT and iNTT.
+	\end{itemize}
+	\begin{figure}
+		\includegraphics[width=0.68\textwidth]{Images/ModAdd.pdf}
+		\caption{Modular Addition}
+	\end{figure}
+	\begin{figure}
+		\includegraphics[width=0.68\textwidth]{Images/ModSub.pdf}
+		\caption{Modular Subtraction}
+	\end{figure}
+\end{frame}
+% ?----------------------------------
+\begin{frame}{Core Architecture 4: Optimized Modular Multiplication}
+	\begin{itemize}\setlength{\itemsep}{1.5em}
+		\item Modular multiplication is a critical and complex part of the butterfly unit.
+		\item We implemented and compared five different algorithms: \textbf{Barrett}, \textbf{Montgomery}, \textbf{Solinas}, \textbf{Plantard}, and \textbf{K$^2$-RED}.
+		\fade{2}
+		\item \textcolor<2->{CtpLatteBlue}{\textbf{Barrett}} reduction emerged as the most efficient choice, offering the best balance of both \textbf{resource utilization} and \textbf{speed}, resulting in the lowest Area-Time Product (ATP) of 5.82.
+	\end{itemize}
+\end{frame}
+% ?----------------------------------
+\begin{frame}{Core Architecture 4: Optimized Barrett Multiplication}
+	\begin{itemize}\setlength{\itemsep}{1.5em}
+		\item $\mu = \lfloor \dfrac{2^{2t}}{q} \rfloor = 2^{23} + 2^{13} + 2^{3} - 1$.
+		\item $q = 2^{23} - 2^{13} + 1$.
+	\end{itemize}
+	\vspace{1ex}
+	\begin{center}
+		\begin{minipage}{0.81\textwidth}
+			\begin{algorithm}[H]
+				\DontPrintSemicolon
+				\KwIn{$a, b \in \mathbb{Z}_q, t = \lceil \log_2 q \rceil = 23$}
+				\KwOut{$out = a \cdot b \pmod q$}
+				$product \gets a \cdot b$\;
+				$x_1 \gets product \gg (t-2)$\;
+				$x_2 \gets (x_1 \ll 23) + (x_1 \ll 13) + (x_1 \ll 3) - x_1$ \;
+				$s \gets x_2 \gg (t+2)$\;
+				$out \gets product - ((s \ll 23) - (s \ll 13) + s) - q$\;
+				\If{$out < 0$}{
+					$out \gets out + q$\;
+				}
+				\caption{Hardware-friendly Optimized Barrett Modular Multiplication}
+				\label{alg:barrett}
+			\end{algorithm}
+		\end{minipage}
+	\end{center}
+\end{frame}
+% ?----------------------------------
+\subsection{Overall Architecture}
+\begin{frame}{Overall Architecture}
+	\begin{figure}
+		\includegraphics[width=0.8\textwidth]{Images/Hardware.pdf}
+	\end{figure}
+\end{frame}
+% *==================================================================
+
+\section{Implementation}
+\subsection{Implementation and Results}
+\begin{frame}{Implementation and Results}
+	\begin{itemize}\setlength{\itemsep}{1em}
+		\item \textbf{FPGA Platform}: Artix-7 (XC7A100CSG324).
+		\item \textbf{Target Scheme}: ML-DSA.
+		\item \textbf{Number of Clock Cycles}: 1056, for both NTT and iNTT, in all cases:
+		\begin{itemize}\setlength{\itemsep}{1ex}\vspace{1ex}
+			\item Each BFU operation takes 1 clock cycle.
+		\end{itemize}
+		\item The table below shows the results of NTT/iNTT core using different modular multipliers.
+	\end{itemize}
+
+	\begin{table}[H]
+		\begin{center}
+				\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|}
+					\hline
+					\textbf{\thead{Modular \\ Reduction}} & \textbf{\thead{\# \\ LUTs}} & \textbf{\thead{\# \\ FFs}} & \textbf{\thead{\# \\ DSPs}} & \textbf{\thead{\# \\ BRAMs}} & \textbf{\thead{Freq.\\ (MHz)}} & \textbf{\thead{Latency \\ (\boldmath${\mu}$s)}} & \textbf{\thead{Power\\ (mW)}} & \textbf{\thead{ATP}}\\
+					\hline
+					\hline
+					\tikzmark{TopLeftModMul}\textbf{Barrett} & \textbf{590} & \textbf{158} & \textbf{2} & \textbf{2.5} & \textbf{302} & \textbf{3.49} & \textbf{77} & \textbf{5.82} \tikzmark{BottomRightModMul} \\
+					Montgomery & 616 & 158 & 2 & 2.5 & 277 & 3.81 & 66 & 6.46 \\
+					Solinas Prime & 692 & 158 & 2 & 2.5 & 280 & 3.77 & 74 & 6.68 \\
+					Plantard & 525 & 158 & 3 & 3 & 266 & 3.96 & 62 & 7.73 \\
+					K$^2$-RED & 581 & 158 & 7 & 2.5 & 257 & 4.11 & 68 & 11.96 \\
+					\hline
+				\end{tabular}
+			\onslide<2>{
+				\begin{tikzpicture}[overlay, remember picture]
+					\draw[CtpLatteFlamingo, very thick, rounded corners=1mm] 
+						([xshift=-3mm, yshift=3mm]pic cs:TopLeftModMul) 
+						rectangle 
+						([xshift=3mm, yshift=-0.6mm]pic cs:BottomRightModMul);
+				\end{tikzpicture}
+			}
+		\end{center}
+	\end{table}
+\end{frame}
+% ?----------------------------------
+\subsection{Comparison with State-of-the-Art}
+\begin{frame}{Comparison with State-of-the-Art}
+	\begin{itemize}\setlength{\itemsep}{1em}
+		\item We measure overall efficiency using the Area-Time Product (ATP), where lower is better.
+		\item LightNTT achieves an ATP of 5.82.
+		\item This is approximately 29\% better than comparable state-of-the-art small designs, and even better than larger, faster designs.
+	\end{itemize}
+	\begin{table}[H]
+		\begin{center}
+			\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|}
+			\hline
+			\bfseries Paper & \bfseries{\thead{FPGA \\ Platfrom}} & \bfseries {\thead{\# \\ LUTs}} & \bfseries {\thead{\# \\ FFs}} & \bfseries {\thead{\# \\ DSPs}} & \bfseries{\thead{\# \\ BRAMs}} & \bfseries {\thead{\# \\ CCs}} & \bfseries{\thead{Freq. \\ (MHz)}} & \bfseries{\thead{Latency \\ (\boldmath${\mu}$s) }} & \bfseries ATP\\
+			\hline
+			\hline
+			Shrivastava et al. & ZUS+$^1$ & 2287 & 1924 & 6 & 5 & 624 & 420 & 1.56 & 8.97\\
+			DiMatteo et al. & A7$^2$ & 1302 & 571 & 9 & 3.5 & 1074 & 275 & 3.91  & 17.74\\
+			Malal & VUS+$^3$ & 1601 & 699 & 10 & 5 & 603 & 142.8 & 4.22 & 23.00\\
+			Kundi et al. & ZUS+ & 3821 & 2970 & 20 & 5 & 258 & 322 & 0.80 & 9.06\\
+			Mandal \& Roy & A7 & 690 & 771 & 2 & 2.5 & 1024 & 273 & 3.75 & 7.93 \\
+			Geng et al. & V7$^4$ & 1.2k & 640 & 4 & 0 & 1034 & 246 & 4.2 & 10.59 \\
+			Land et al. & A7 & 524 & 759 & 17 & 1 & 183 & 311 & 1.7 & 9.1\\
+			Nguyen et al. & A7 & 13804 & 11019 & 0 & 0 & 64 & 163 & 0.39 & 7.53\\
+			\tikzmark{TopLeftComp}\textbf{This Work} & A7 & \textbf{590} & \textbf{158} & \textbf{2} & \textbf{2.5} & \textbf{1056} & \textbf{300} & \textbf{3.49} & \textbf{5.82} \tikzmark{BottomRightComp} \\
+			\hline
+			\end{tabular}	
+			\\\raggedright\footnotesize 1: Zynq UltraScale+, 2: Artix-7, 3: Virtex UltraScale+, 4: Virtex-7\\
+			\onslide<2>{
+				\begin{tikzpicture}[overlay, remember picture]
+					\draw[CtpLatteFlamingo, very thick, rounded corners=1mm] 
+						([xshift=-3mm, yshift=3mm]pic cs:TopLeftComp) 
+						rectangle 
+						([xshift=3mm, yshift=-.6mm]pic cs:BottomRightComp);
+				\end{tikzpicture}
+			}
+		\end{center}
+	\end{table}
+\end{frame}
+% ?----------------------------------
+\subsection{Scalability Through Parallelism}
+\begin{frame}{Scalability Through Parallelism}
+	\begin{itemize}\setlength{\itemsep}{1em}
+		\item The small size of LightNTT is a significant advantage.
+		\item For applications requiring higher throughput, multiple LightNTT cores can be instantiated to run in parallel.
+		\item For example, using 4 parallel cores could achieve a very competitive throughput of nearly 6.8 Gbps. This is not feasible with larger, more area-intensive designs.
+	\end{itemize}
+	\fade{2}
+	\blueblock{0.8\textwidth}{}{
+		In addition to the applications that face limitations in area usage, such as \textit{smart cards}, \textit{IoT devices}, \textit{wearable gadgets}, etc.
+	}
+\end{frame}
+% ?----------------------------------
+\subsection{Conclusion and Future Work}
+\begin{frame}{Conclusion and Future Work}
+	\begin{itemize}\setlength{\itemsep}{1em}
+		\item \textbf{Conclusion}:
+		\begin{itemize}\setlength{\itemsep}{1ex}\vspace{1ex}
+			\item We presented LightNTT, a lightweight and efficient NTT/iNTT hardware core for ML-DSA.
+			\item By combining a constant-geometry dataflow, a pipelined butterfly unit, and an optimized Barrett multiplier, we achieved a compelling balance between area, speed, and power.
+		\end{itemize}
+		\item \textbf{Future Work}:
+		\begin{itemize}\setlength{\itemsep}{1ex}\vspace{1ex}
+			\item \textbf{Security Analysis}: Formally investigate and quantify the design's resilience against side-channel attacks (SCA).
+			\item \textbf{Broader Support}: Adapt the architecture to support other module-lattice-based cryptographic schemes.
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+% *==================================================================
+\begin{frame}{Acknowledgment}
+	\begin{columns}[T]
+		\hspace{2em}
+		\begin{column}{0.16\textwidth}
+			\textcolor{CtpLatteRed}{\large\textbf{Our Team:}}\\[1em]
+			\hrule
+			\CenteredRoundedImage[width=0.14\paperwidth]{Images/Bardia.jpg}\vspace{-3ex}
+			\CenteredRoundedImage[width=0.14\paperwidth]{Images/Reza.jpg}
+			\vspace{-3ex}
+			\CenteredRoundedImage[width=0.14\paperwidth]{Images/Mehran.jpg}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\vspace{1.8em}
+			\hrule
+			\vspace{1.1em}
+			\textbf{Bardia Taghavi},\\ PhD Candidate\\Florida Atlantic University, USA.\\[3.1em]
+			\textbf{Reza Azarderakhsh},\\ Professor\\Florida Atlantic University, USA.\\[3.1em]
+			\textbf{Mehran Mozaffari Kermani},\\ Associate Professor\\University of South Florida, USA.\\
+		\end{column}
+		\begin{column}{0.3\textwidth}
+			\textcolor{CtpLatteRed}{\large\textbf{Sponsors:}}\\[.7em]
+			\hrule\vspace{1em}
+			\includegraphics[width=0.15\paperwidth]{Images/FAU.png}\\[1em]
+			\includegraphics[width=0.15\paperwidth]{Images/ISENSE.png}\\[1em]
+			\includegraphics[width=0.2\paperwidth]{Images/NSF.png}
+
+		\end{column}
+
+	\end{columns}
+
+\end{frame}
+\standout{Thank you for your attention!\\[1em]\Large{Any questions?}}
+
+% *==================================================================
+% *==================================================================
+
+% \bibliographystyle{IEEEtran}
+% \bibliography{References}
+
+\end{document}
