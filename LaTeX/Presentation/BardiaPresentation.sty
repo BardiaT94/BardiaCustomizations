@@ -1,7 +1,8 @@
 % Packages:
-% Design:
 % Defining Colors:
 \usepackage{BardiaColors}
+
+% Fonts:
 % \usepackage[default]{gillius}
 % \usepackage{iwona}
 \usepackage[sfdefault]{libertine}
@@ -9,9 +10,11 @@
 \usepackage[T1]{fontenc}
 \usepackage{amsmath,amssymb}
 
+% Visuals:
 \usepackage{graphicx}
 \usepackage{tikz}
 \usetikzlibrary{tikzmark}
+\usepackage[most]{tcolorbox}
 \usepackage[
 	activate={true,nocompatibility},
 	kerning,
@@ -89,6 +92,13 @@
     \end{center}%
 }
 
+% Link Color:
+\hypersetup{%
+			citecolor=UrlColor,%
+			linkcolor=LinkColor,%
+			urlcolor=UrlColor%
+		}%
+
 % ---------------------------------
 % Beamer Packages:
 \usetheme[titleformat=smallcaps, progressbar=foot]{moloch}
@@ -111,45 +121,33 @@
 \setbeamercolor{normal text}{fg=CtpMochaCrust}
 \setlength{\moloch@progressinheadfoot@linewidth}{2pt}
 \setlength{\moloch@progressonsectionpage@linewidth}{2pt}
-
-% Itemize:
-\setbeamertemplate{itemize item}{\ding{71}}
-\setbeamertemplate{itemize subitem}{$\triangleright$}
-\setbeamertemplate{itemize subsubitem}{$\circ$}
-
-% Table of Contents:
-\setbeamertemplate{sections/subsections in toc}[square]
-\setbeamercolor{section number projected}{bg=CtpLatteSubText1,fg=CtpMochaText}
-\setbeamercolor{subsection number projected}{bg=CtpLatteSubText1,fg=CtpMochaText}
-
-
-% Makes all fonts the same size
-\setbeamerfont{itemize/enumerate body}{size=\normalsize}
-\setbeamerfont{itemize/enumerate subbody}{size=\normalsize}
-\setbeamerfont{itemize/enumerate subsubbody}{size=\normalsize}
-
-\setbeamertemplate{blocks}[rounded]
-\setbeamercolor{block body}{bg=CtpMochaGreen, fg=CtpMochaCrust}
-\setbeamercolor{block title}{bg=CtpMochaGreen, fg=CtpMochaCrust}
-\setbeamercolor{block body example}{bg=CtpMochaSky, fg=CtpMochaCrust}
-\setbeamercolor{block title example}{bg=CtpMochaText,fg=CtpMochaCrust}
-\setbeamercolor{block body alerted}{bg=CtpLatteYellow, fg=WhiteText}
-\setbeamercolor{block title alerted}{bg=CtpLatteYellow, fg=WhiteText}
-
 \setbeamertemplate{title separator}{
 	\begin{center}
 		\rule{\linewidth}{1pt}
 	\end{center}
 }
 
-\makeatletter
-\AtBeginEnvironment{exampleblock}{%
-	\setbeamercolor{itemize item}{fg=CtpMochaCrust}
-	\setbeamercolor{itemize subitem}{fg=CtpMochaCrust}
-	\setbeamercolor{itemize subsubitem}{fg=CtpMochaCrust}
-}
-\makeatother
+% Itemize:
+\setbeamertemplate{itemize item}{\ding{71}}
+\setbeamertemplate{itemize subitem}{$\triangleright$}
+\setbeamertemplate{itemize subsubitem}{$\circ$}
+\setbeamercolor{itemize item}{fg=ItemizeColor}
+\setbeamercolor{itemize subitem}{fg=ItemizeColor}
+\setbeamercolor{itemize subsubitem}{fg=ItemizeColor}
+% Enumerate:
+\setbeamercolor{enumerate item}{fg=ItemizeColor}
+\setbeamercolor{enumerate subitem}{fg=ItemizeColor}
+\setbeamercolor{enumerate subsubitem}{fg=ItemizeColor}
 
+% Table of Contents:
+\setbeamertemplate{sections/subsections in toc}[square]
+\setbeamercolor{section number projected}{bg=CtpLatteSapphire,fg=WhiteText}
+\setbeamercolor{subsection number projected}{bg=CtpLatteSapphire,fg=WhiteText}
+
+% Makes all fonts the same size
+\setbeamerfont{itemize/enumerate body}{size=\normalsize}
+\setbeamerfont{itemize/enumerate subbody}{size=\normalsize}
+\setbeamerfont{itemize/enumerate subsubbody}{size=\normalsize}
 
 % Beautiful animation:
 % Save the algorithm counter:
@@ -174,42 +172,40 @@
 \newcommand{\fade}[1]{
 	\color<-#1>{FadeOverlay}%
 	\only<-#1>{%
-		\setbeamercolor{itemize item}{fg=FadeOverlay}%
-		\setbeamercolor{itemize subitem}{fg=FadeOverlay}%
-		\setbeamercolor{itemize subsubitem}{fg=FadeOverlay}%
-		\hypersetup{%
-			citecolor=FadeOverlay,%
-			linkcolor=FadeOverlay,%
-			urlcolor=FadeOverlay%
-		}%
+		\colorlet{ItemizeColor}{FadeOverlay}%
+		\colorlet{LinkColor}{FadeOverlay}%
+		\colorlet{UrlColor}{FadeOverlay}%
+		\colorlet{BlueFrame}{FadeOverlay}%
+		\colorlet{BlueBack}{WhispCloudGray}%
+		\colorlet{GreenFrame}{FadeOverlay}%
+		\colorlet{GreenBack}{WhispCloudGray}%
+		\colorlet{RedFrame}{FadeOverlay}%
+		\colorlet{RedBack}{WhispCloudGray}%
+		\colorlet{BoxText}{FadeOverlay}%
+		\colorlet{BoxTitleText}{WhispCloudGray}%
 		\let\includegraphics\fadedincludegraphics %Images
-		% Blocks:
-		\setbeamercolor{block title}{fg=FadeOverlay,bg=WhispCloudGray}%
-		\setbeamercolor{block body}{fg=FadeOverlay,bg=WhispCloudGray}%
-		\setbeamercolor{block title example}{fg=FadeOverlay,bg=WhispCloudGray}%
-		\setbeamercolor{block body example}{fg=FadeOverlay,bg=WhispCloudGray}%
-		\setbeamercolor{block title alerted}{fg=FadeOverlay,bg=WhispCloudGray}%
-		\setbeamercolor{block body alerted}{fg=FadeOverlay,bg=WhispCloudGray}%
 	}%
 
 	\color<#1->{CtpMochaCrust}%
 	\only<#1->{%
-		\setbeamercolor{itemize item}{fg=CtpLatteRed}%
-		\setbeamercolor{itemize subitem}{fg=CtpLatteRed}%
-		\setbeamercolor{itemize subsubitem}{fg=CtpLatteRed}%
-		\hypersetup{%
-			citecolor=CtpLatteBlue,%
-			linkcolor=CtpLatteRed,%
-			urlcolor=CtpLatteBlue%
-		}%
-		\let\includegraphics\oldincludegraphics
-		\setbeamercolor{block body}{bg=CtpMochaGreen, fg=CtpMochaCrust}%
-		\setbeamercolor{block title}{bg=CtpMochaGreen, fg=CtpMochaCrust}%
-		\setbeamercolor{block body example}{bg=CtpMochaSky, fg=CtpMochaCrust}%
-		\setbeamercolor{block title example}{bg=CtpMochaText,fg=CtpMochaCrust}%
-		\setbeamercolor{block body alerted}{bg=CtpLatteYellow, fg=WhiteText}%
-		\setbeamercolor{block title alerted}{bg=CtpLatteYellow, fg=WhiteText}%
+		\colorlet{ItemizeColor}{CtpLatteRed}%
+		\colorlet{LinkColor}{CtpLatteRed}%
+		\colorlet{UrlColor}{CtpLatteBlue}%
+		\colorlet{BlueFrame}{CtpMochaSky}%
+		\colorlet{BlueBack}{CtpMistoSky}%
+		\colorlet{GreenFrame}{CtpMochaGreen}%
+		\colorlet{GreenBack}{CtpMistoGreen}%
+		\colorlet{RedFrame}{CtpMochaMaroon}%
+		\colorlet{RedBack}{CtpMistoRed}%
+		\colorlet{BoxText}{CtpMochaCrust}%
+		\colorlet{BoxTitleText}{CtpMochaCrust}%
+		\let\includegraphics\oldincludegraphics %Images
 	}%
+}
+% Highlight Row Color:
+\newcommand{\highlightrow}[2]{%
+  \def\highlightrowcolor{}%
+  \only#1{\def\highlightrowcolor{\rowcolor{#2}}}%
 }
 
 % Removing Edges:
@@ -233,51 +229,90 @@
 }
 
 % Standout Slide:
+\setbeamercolor{standoutbox}{fg=white, bg=CtpLatteBlue}
 \newcommand{\standout}[1]{
 	{
     \setbeamercolor{background canvas}{bg=white}
     \begin{frame}[plain, c]
         \begin{tikzpicture}[remember picture, overlay]
-            \fill[CtpLatteRed] (current page.south west) rectangle ++(0.07\paperwidth, \paperheight);
-            \fill[CtpLatteRed] (current page.south east) rectangle ++(-0.07\paperwidth, \paperheight);
+            \fill[CtpLatteYellow] (current page.south west) rectangle ++(0.07\paperwidth, \paperheight);
+            \fill[CtpLatteYellow] (current page.south east) rectangle ++(-0.07\paperwidth, \paperheight);
         \end{tikzpicture}
-        \yellowblock{0.85\textwidth}{}{
-			\Huge\textbf{\\[1ex]#1\vspace{1em}}
+				\centering
+        \highlightbox{
+				\Huge\textbf{\\[1ex]#1\vspace{1em}
+				}
 			}
     \end{frame}
 	}
 }
 
+\newcommand{\highlightbox}[1]{
+	\begin{beamercolorbox}[
+			rounded=true,
+			shadow=true,  
+			center,       
+			wd=0.85\textwidth, 
+			sep=1em 
+		]{standoutbox}
+		#1
+	\end{beamercolorbox}
+}
+
 % Blocks:
 \newcommand{\blueblock}[3]{
+	\vspace{-1ex}
 	\begin{center}
-		\begin{minipage}{#1}
-			\begin{exampleblock}{#2}
-				\centering
-				#3
-			\end{exampleblock}
-		\end{minipage}
+		\begin{tcolorbox}[
+			width=#1,
+			enhanced,
+			arc=1ex,
+			colback=BlueBack,
+			colframe=BlueFrame,
+			coltext=BoxText,
+			coltitle=BoxTitleText,
+			title={#2},
+			fonttitle=\bfseries]
+			\setlength{\leftmargini}{1.5ex} 
+			#3
+		\end{tcolorbox}
 	\end{center}
 }
 
 \newcommand{\greenblock}[3]{
+	\vspace{-1ex}
 	\begin{center}
-		\begin{minipage}{#1}
-			\begin{block}{#2}
-				\centering
-				#3
-			\end{block}
-		\end{minipage}
+		\begin{tcolorbox}[
+			width=#1,
+			enhanced,
+			arc=1ex,
+			colback=GreenBack,
+			colframe=GreenFrame,
+			coltext=BoxText,
+			coltitle=BoxTitleText,
+			title={#2},
+			fonttitle=\bfseries]
+			\setlength{\leftmargini}{1.5ex} 
+			#3
+		\end{tcolorbox}
 	\end{center}
 }
 
-\newcommand{\yellowblock}[3]{
+\newcommand{\redblock}[3]{
+	\vspace{-1ex}
 	\begin{center}
-		\begin{minipage}{#1}
-			\begin{alertblock}{#2}
-				\centering
-				#3
-			\end{alertblock}
-		\end{minipage}
+		\begin{tcolorbox}[
+			width=#1,
+			enhanced,
+			arc=1ex,
+			colback=RedBack,
+			colframe=RedFrame,
+			coltext=BoxText,
+			coltitle=BoxTitleText,
+			title={#2},
+			fonttitle=\bfseries]
+			\setlength{\leftmargini}{1.5ex} 
+			#3
+		\end{tcolorbox}
 	\end{center}
 }
