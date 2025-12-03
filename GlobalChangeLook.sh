@@ -4,7 +4,7 @@ FONT="Exo 2"
 MONOSPACE_FONT="Hurmit Nerd Font Mono"
 ICON_THEME="kora"
 KDE_THEME="CachyOS-Nord"
-GTK_THEME="Catppuccin-Mocha-Dark"
+GTK_THEME="Catppuccin-Mocha"
 
 # 2) Hyprland Hyprpmbars
 sed -i "s/bar_text_font = .*/bar_text_font = ${FONT}/g" "$HOME/.config/hypr/userprefs.conf"
