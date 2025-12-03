@@ -144,12 +144,7 @@ window#waybar {
     color: #89dceb;
 }
 
-#power-profiles-daemon {
-    color: #cba6f7;
-    padding-right: 10px;
-}
-
 #custom-workflows {
-    color: #94e2d5;
+    color: #cba6f7;
     /* padding-right: 0px; */
 }

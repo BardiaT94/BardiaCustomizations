@@ -84,7 +84,6 @@
     },
     "modules": [
       "custom/tray-icon-left", 
-      "power-profiles-daemon",
       "backlight",
       "battery",
       "custom/workflows"
