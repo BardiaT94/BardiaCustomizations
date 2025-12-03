@@ -1,0 +1,131 @@
+% Packages:
+% Defining Colors:
+\usepackage{BardiaColors}
+%  Design:
+\usepackage[a4paper,margin=1in,marginparwidth=2cm,footskip=.5in]{geometry}
+% \usepackage[default]{gillius}
+% \usepackage{iwona}
+\usepackage[sfdefault]{libertine}
+\usepackage{inconsolata}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage[
+	activate={true,nocompatibility},
+	kerning=true,
+	factor=1100,
+	stretch=50,
+	shrink=10,
+	tracking=true,
+	final
+	]{microtype}
+\usepackage[
+	colorlinks=true,
+	urlcolor=MidnightBlue,
+	linkcolor=CtpLatteSapphire,
+	citecolor=MidnightBlue,
+	]{hyperref}
+
+% Floating Objects
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\usepackage{listings}
+\usepackage{multirow}
+\usepackage{makecell}
+
+% Symbols:
+\usepackage{pifont}
+\usepackage{bbding}
+\usepackage{soul}
+\usepackage{xfrac}
+\usepackage[makeroom]{cancel}
+
+% Other Packages:
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{indentfirst}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+
+% Defining Code Styles:
+\usepackage{BardiaCoding}
+
+% ==========================================================================
+% ==========================================================================
+
+% Beautiful Caligraphy:
+\DeclareFontFamily{OT1}{pzc}{}
+\DeclareFontShape{OT1}{pzc}{m}{it}{<-> s * [1.10] pzcmi7t}{}
+\DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
+
+
+% Last Beautifying:
+\pagestyle{fancy}
+\setlength{\headheight}{15pt}
+\linespread{1.35}
+\hbadness=99999
+\vbadness=99999
+\AtBeginDocument{\color{CtpMochaCrust}}
+
+% Algorithm Stylings:
+\SetKwComment{Comment}{$\triangleright$\ }{}
+\SetCommentSty{small}
+\IncMargin{1em}
+
+% Defining Title Command
+\newcommand{\setTitle}[1]{\def\Title{#1}}
+\providecommand{\Title}{}
+% Defining Author Command
+\newcommand{\setAuthor}[1]{\def\Author{#1}}
+\providecommand{\Author}{}
+% Defining Assignment Number Command
+\newcommand{\setAssignmentNumber}[1]{\def\AssignmentNumber{#1}}
+\providecommand{\AssignmentNumber}{}
+
+% Center and round the image:
+\newsavebox{\imagebox}
+\newcommand{\CenteredRoundedImage}[2][width=0.7\textwidth]{%
+    \begin{center}%
+        \sbox{\imagebox}{\includegraphics[#1]{#2}}%
+        \begin{tikzpicture}%
+            \node[
+                inner sep=0,
+                rounded corners=1ex,
+                minimum width=\wd\imagebox,
+                minimum height=\ht\imagebox,
+                path picture={
+                    \node at (path picture bounding box.center) {\usebox{\imagebox}};
+                }
+            ] {};
+        \end{tikzpicture}%
+    \end{center}%
+}
+
+% Separation Line:
+\newcommand{\MinorSepLine}{\begin{center}\textcolor{CtpMochaLavender}{\rule{0.5\textwidth}{0.4pt}}\end{center}}
+\newcommand{\MajorSepLine}{\begin{center}\textcolor{CtpLatteBlue}{\rule{0.7\textwidth}{1pt}}\end{center}}
+
+% Fraction:
+\newcommand*\rfrac[2]{{}^{#1}\!/_{#2}}
+
+% Title:
+\title{
+	\vspace{-4em}
+	\hrule
+	\vspace{1em}
+	\color{RosePineDawnPine}\textbf{\huge{\Title}}
+}
+\author{
+	\vspace{-1cm}
+	\makebox[0.48\textwidth][l]{\textit{\Author}}
+	\makebox[0.48\textwidth][r]{\textit{\AssignmentNumber}}
+}
+
+\lhead{\Title}
+\rhead{\AssignmentNumber}
+
+\date{\vspace{-6ex}}

@@ -1,0 +1,94 @@
+{
+  "position": "top",
+  "margin-left": 5,
+  "margin-right": 5,
+  "margin-top": 5,
+  "margin-bottom": 0,
+  "layer": "top",
+  "output": ["*"],
+  "height": 20,
+  "exclusive": true,
+  "passthrough": false,
+  "reload_style_on_change": true,
+  "include": [
+    "$XDG_CONFIG_HOME/waybar/modules/*json*",
+    "$XDG_CONFIG_HOME/waybar/includes/includes.json"
+  ],
+  "modules-left": [
+    "cpu",
+    "memory",
+    "custom/cpuinfo",
+    "custom/gpuinfo",
+    "custom/sensorsinfo",
+    "custom/separator",
+    "hyprland/workspaces",
+    "wlr/taskbar",
+    "group/tray-drawer-left"
+  ],
+
+  "modules-center": [
+    "clock", 
+    "custom/arch-icon", 
+    "custom/weather"
+  ],
+
+  "modules-right": [
+    "custom/spotify",
+    "group/tray-drawer-right",
+    // "hyprland/language",
+    "network",
+    "custom/cliphist",
+    "pulseaudio#output",
+    "pulseaudio#input",
+    "privacy",
+    "custom/hyde-menu",
+    "custom/power"
+  ],
+
+  // Customs
+  "custom/tray-icon-right": {
+    "format": "󰅃",
+    "rotate": 90,
+    "tooltip": true,
+    "tooltip-format": "System Tray"
+  },
+  "group/tray-drawer-right": {
+    "orientation": "horizontal",
+    "drawer": {
+      "transition-duration": 500,
+      "children-class": "tray-child",
+      "transition-to-left": true
+    },
+    "modules": ["custom/tray-icon-right", "tray", "custom/updates", "custom/keybindhint", "custom/bluetooth"]
+  },
+  "custom/separator": {
+    "format": " | "
+  },
+  "custom/arch-icon": {
+    "format": "\uf303",
+    "on-click": "pkill -x rofi || ~/.local/lib/hyde/rofilaunch.sh"
+  },
+
+  "custom/tray-icon-left": {
+    "format": "󰅃",
+    "rotate": 270,
+    "tooltip": true,
+    "tooltip-format": "System Tray"
+  },
+  "group/tray-drawer-left": {
+    "orientation": "horizontal",
+    "drawer": {
+      "transition-duration": 500,
+      "children-class": "tray-child",
+      "transition-to-left": true
+    },
+    "modules": [
+      "custom/tray-icon-left", 
+      "power-profiles-daemon",
+      "backlight",
+      "battery",
+      "custom/workflows"
+    ]
+  }
+
+}

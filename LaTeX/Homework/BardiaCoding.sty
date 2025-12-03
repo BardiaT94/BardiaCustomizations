@@ -1,0 +1,55 @@
+% Codings and Listigs (Monospace Stuffs):
+\lstdefinestyle{MyTheme}{
+	basicstyle=\linespread{1.2}\ttfamily\small,
+	breakatwhitespace=false,
+	breaklines=false,
+	captionpos=b,
+	keepspaces=false,
+	numbers=none,
+	numbersep=5pt,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	frame=single,
+	frameshape={ryrRYR}{yY}{yY}{ryrRYR},
+	tabsize=2,
+	escapeinside={`}{`},
+	backgroundcolor=\color[rgb]{0.95,0.95,0.95},
+	commentstyle=\footnotesize\color{CommentColor},
+	numberstyle=\color{CadetBlue},
+	stringstyle=\color{BurntOrange},
+	rulecolor=\color{black},
+	keywordstyle=[1]{\itshape\bfseries\color{CtpLatteSapphire}},
+	keywordstyle=[2]{\bfseries\color{CtpLatteYellow}},
+	keywordstyle=[3]{\color{CtpLatteMaroon}},
+}
+\lstdefinestyle{Verilog}{
+	style=MyTheme,
+	language=Verilog,
+	otherkeywords={:, =, &, ^, |, @, [, ], !, ~, 'h, 'b, \#, \{, \}, \(, \)},
+	morekeywords=[1]{\$finish},
+	morekeywords=[2]{:, =, &, ^, |, @, !, ~, \#},
+	morekeywords=[3]{\{, \}, \(, \), [, ], 'h, , 'b}
+}
+\lstdefinestyle{C}{
+	style=MyTheme,
+	language=C,
+	otherkeywords={:, =, &, ^, |, @, [, ], !, ~, 'h, 'b, \#, \{, \}, \(, \)},
+	morekeywords=[1]{},
+	morekeywords=[2]{:, =, &, ^, |, @, !, ~, \#},
+	morekeywords=[3]{\{, \}, \(, \), [, ], 'h, , 'b}
+}
+\lstdefinestyle{Python}{
+	style=MyTheme,
+	language=Python,
+	otherkeywords={:, =, &, ^, *, +, -, /, |, @, [, ], !, ~, \{, \}, \(, \), 0x},
+	morekeywords=[1]{},
+	morekeywords=[2]{:, =, &, ^, *, +, -, /, |, @, !, ~, },
+	morekeywords=[3]{\{, \}, \(, \), [, ], 0x}
+}
+\lstset{style=MyTheme}
+
+\renewcommand\lstlistingname{Code}
+\newcommand{\code}[1]{\colorbox[rgb]{0.9,0.9,0.9}{\smaller\texttt{#1}}}
+\newcommand{\timescale}{{\itshape\color{CtpLatteBlue}{\textasciigrave}timescale}}
+\newcommand{\NC}[1]{\footnotesize\textcolor{CommentColor}{#1}} % Normal Comment

@@ -1,0 +1,159 @@
+% Defining Colors:
+\usepackage[dvipsnames]{xcolor}
+\usepackage{BardiaColors}
+%  Design:
+\usepackage[a4paper,margin=1in,marginparwidth=2cm,footskip=.5in]{geometry}
+% \usepackage[default]{gillius}
+% \usepackage{iwona}
+\usepackage[sfdefault]{libertine}
+\usepackage{inconsolata}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+
+\usepackage[
+	activate={true,nocompatibility},
+	kerning,
+	tracking,
+	final,
+	factor=1100,
+	stretch=50,
+	shrink=10,
+	nopatch=footnote
+	]{microtype}
+\usepackage[
+	colorlinks=true,
+	urlcolor=MidnightBlue,
+	linkcolor=CtpLatteSapphire,
+	citecolor=MidnightBlue,
+	]{hyperref}
+
+% Floating Objects
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{tikzmark}
+\usepackage[most]{tcolorbox}
+
+% Symbols:
+\usepackage{pifont}
+\usepackage{bbding}
+\usepackage{adfbullets}
+\usepackage{MnSymbol}
+\usepackage{soul}
+\usepackage{xfrac}
+\usepackage[makeroom]{cancel}
+
+% Other Packages:
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{indentfirst}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage{setspace}
+
+% Defining Code Styles:
+\usepackage{BardiaCoding}
+
+% ==========================================================================
+% ==========================================================================
+
+% Beautiful Caligraphy:
+\DeclareFontFamily{OT1}{pzc}{}
+\DeclareFontShape{OT1}{pzc}{m}{it}{<-> s * [1.10] pzcmi7t}{}
+\DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
+
+% Last Beautifying:
+\pagestyle{fancy}
+\setlength{\headheight}{15pt}
+\linespread{1.2}
+\hbadness=99999
+\vbadness=99999
+
+% Change default itemized shape:
+\setlist[itemize,1]{label=$\filleddiamond$}
+\setlist[itemize,2]{label=$\filledtriangleright$}
+\setlist[itemize,3]{label=$\smalldiamond$}
+
+
+% Algorithm Stylings:
+\SetKwComment{Comment}{$\triangleright$\ }{}
+\SetCommentSty{small}
+\IncMargin{1em}
+
+
+% Title:
+\title{
+	\vspace{-5.5em}
+	\hrule
+	\vspace{1em}
+	\color{Ultramarine}\textbf{\huge{\Title}}
+	\vspace{1ex}
+}
+\author{
+	\vspace{-2cm}
+	\textit{
+    \AssignmentNumber
+	}
+}
+
+% Defining Title Command
+\newcommand{\setTitle}[1]{\def\Title{#1}}
+\providecommand{\Title}{}
+% Defining Author Command
+\newcommand{\setAuthor}[1]{\def\Author{#1}}
+\providecommand{\Author}{}
+% Defining Assignment Number Command
+\newcommand{\setAssignmentNumber}[1]{\def\AssignmentNumber{#1}}
+\providecommand{\AssignmentNumber}{}
+
+% Defining Course Command
+\lhead{\Title}
+\rhead{\AssignmentNumber}
+
+% Math custom commands:
+\newcommand*\rfrac[2]{{}^{#1}\!/_{#2}}
+\newcommand{\pmods}[1]{\;(\text{mod}^\pm\; {#1})}
+
+\date{\vspace{-6ex}}
+
+\newcommand{\highlightbox}[1]{
+	\begin{beamercolorbox}[
+			rounded=true,
+			shadow=true,  
+			center,       
+			wd=0.85\textwidth, 
+			sep=1em 
+		]{standoutbox}
+		#1
+	\end{beamercolorbox}
+}
+
+% Blocks:
+\newcommand{\coloredblock}[5]{
+	\vspace{-1ex}
+	\begin{center}
+		\begin{tcolorbox}[
+			width=#1,
+			enhanced,
+			arc=1ex,
+			colframe=#3,
+			colback=#4,
+			coltext=BoxText,
+			coltitle=BoxTitleText,
+			title={#2},
+			fonttitle=\bfseries]
+			\setlength{\leftmargini}{1.5ex} 
+			#5
+		\end{tcolorbox}
+	\end{center}
+}

@@ -1,0 +1,316 @@
+% Packages:
+% Defining Colors:
+\usepackage{BardiaColors}
+
+% Fonts:
+% \usepackage[default]{gillius}
+% \usepackage{iwona}
+\usepackage[sfdefault]{libertine}
+\usepackage{inconsolata}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+
+% Visuals:
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{tikzmark}
+\usepackage[most]{tcolorbox}
+\usepackage[
+	activate={true,nocompatibility},
+	kerning,
+	tracking,
+	final,
+	factor=1100,
+	stretch=50,
+	shrink=10
+	]{microtype}
+
+% Floating Objects:
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\usepackage{listings}
+\usepackage{multirow}
+\usepackage{makecell}
+
+% Symbols:
+\usepackage{pifont}
+\usepackage{bbding}
+\usepackage{soul}
+\usepackage{xfrac}
+\usepackage[makeroom]{cancel}
+\usepackage{bm}
+
+% Other Packages:
+\usepackage{enumerate}
+% \usepackage{enumitem}
+\usepackage[document]{ragged2e}
+\usepackage{setspace}
+
+% Defining Code Styles:
+\usepackage{BardiaCoding}
+
+% ==========================================================================
+% ==========================================================================
+
+% Beautiful Caligraphy:
+\DeclareFontFamily{OT1}{pzc}{}
+\DeclareFontShape{OT1}{pzc}{m}{it}{<-> s * [1.10] pzcmi7t}{}
+\DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
+
+% Other custom commands:
+\newcommand*\rfrac[2]{{}^{#1}\!/_{#2}}
+\newcommand{\pmods}[1]{\;(\text{mod}^\pm\; {#1})}
+\newcommand{\mods}[1]{\;\text{mod}^\pm\; {#1}}
+
+% Last Beautifying:
+\hbadness=10000
+\vbadness=10000
+
+% Algorithm Stylings:
+\SetKwComment{Comment}{$\triangleright$\ }{}
+\SetCommentSty{small}
+\IncMargin{1em}
+
+% Center and round the image:
+\newsavebox{\imagebox}
+\newcommand{\CenteredRoundedImage}[3]{%
+    \begin{center}%
+        \sbox{\imagebox}{\includegraphics[#2]{#3}}%
+        \begin{tikzpicture}%
+            \node[
+                inner sep=0,
+                rounded corners=#1,
+                minimum width=\wd\imagebox,
+                minimum height=\ht\imagebox,
+                path picture={
+                    \node at (path picture bounding box.center) {\usebox{\imagebox}};
+                }
+            ] {};
+        \end{tikzpicture}%
+    \end{center}%
+}
+
+% Link Color:
+\hypersetup{%
+			citecolor=UrlColor,%
+			linkcolor=LinkColor,%
+			urlcolor=UrlColor%
+		}%
+
+% ---------------------------------
+% Beamer Packages:
+\usetheme[titleformat=smallcaps, progressbar=foot]{moloch}
+\usepackage{appendixnumberbeamer}
+
+\setbeamersize{text margin left=0.5cm, text margin right=0.5cm}
+\setbeamertemplate{section in toc}[sections numbered]
+
+% Figures without "figure 1:..."
+\captionsetup{labelformat=empty, font={it,scriptsize}}
+
+% Customizing Moloch Theme
+\setbeamercolor{background canvas}{bg=white}
+\setbeamercolor{frametitle}{bg=CtpLatteSapphire, fg=WhiteText}
+\setbeamercolor{progress bar}{fg=CtpLatteYellow, bg=CtpMochaCrust}
+\setbeamercolor{title separator}{fg=CtpLatteRed}
+\setbeamercolor{structure}{fg=CtpLatteRed}
+\setbeamercolor{title}{fg=CtpLatteSapphire}
+\setbeamerfont{frametitle}{size=\Large}
+\setbeamercolor{normal text}{fg=CtpMochaCrust}
+\setlength{\moloch@progressinheadfoot@linewidth}{2pt}
+\setlength{\moloch@progressonsectionpage@linewidth}{2pt}
+\setbeamertemplate{title separator}{
+	\begin{center}
+		\rule{\linewidth}{1pt}
+	\end{center}
+}
+
+% Itemize:
+\setbeamertemplate{itemize item}{\ding{71}}
+\setbeamertemplate{itemize subitem}{$\triangleright$}
+\setbeamertemplate{itemize subsubitem}{$\circ$}
+\setbeamercolor{itemize item}{fg=ItemizeColor}
+\setbeamercolor{itemize subitem}{fg=ItemizeColor}
+\setbeamercolor{itemize subsubitem}{fg=ItemizeColor}
+% Enumerate:
+\setbeamercolor{enumerate item}{fg=ItemizeColor}
+\setbeamercolor{enumerate subitem}{fg=ItemizeColor}
+\setbeamercolor{enumerate subsubitem}{fg=ItemizeColor}
+
+% Table of Contents:
+\setbeamertemplate{sections/subsections in toc}[square]
+\setbeamercolor{section number projected}{bg=CtpLatteSapphire,fg=WhiteText}
+\setbeamercolor{subsection number projected}{bg=CtpLatteSapphire,fg=WhiteText}
+
+% Makes all fonts the same size
+\setbeamerfont{itemize/enumerate body}{size=\normalsize}
+\setbeamerfont{itemize/enumerate subbody}{size=\normalsize}
+\setbeamerfont{itemize/enumerate subsubbody}{size=\normalsize}
+
+% Beautiful animation:
+% Save the algorithm counter:
+\newcounter{algocounteratalgbegin}
+\AtBeginEnvironment{algorithm}{%
+	\setcounter{algocounteratalgbegin}{\value{algocf}}%
+}
+% Save the original \includegraphics command
+\let\oldincludegraphics\includegraphics
+% Fade in an image:
+\newcommand{\fadedincludegraphics}[2][]{%
+	\begin{tikzpicture}
+		\begin{scope}[transparency group, opacity=0.1]
+			\node[inner sep=0] (image) at (0,0) {\oldincludegraphics[#1]{#2}};
+		\end{scope}
+		\begin{scope}[blend mode=color]
+			\fill[FadeOverlay] (image.south west) rectangle (image.north east);
+		\end{scope}
+	\end{tikzpicture}%
+}
+% Fade Command:
+\newcommand{\fade}[1]{%
+	\color<-#1>{FadeOverlay}%
+	\only<-#1>{%
+		\colorlet{ItemizeColor}{FadeOverlay}%
+		\colorlet{LinkColor}{FadeOverlay}%
+		\colorlet{UrlColor}{FadeOverlay}%
+		\colorlet{SkyFrame}{FadeFrame}%
+		\colorlet{SkyBack}{WhispCloudGray}%
+		\colorlet{GreenFrame}{FadeFrame}%
+		\colorlet{GreenBack}{WhispCloudGray}%
+		\colorlet{RedFrame}{FadeFrame}%
+		\colorlet{RedBack}{WhispCloudGray}%
+		\colorlet{BlueFrame}{FadeFrame}%
+		\colorlet{BlueBack}{WhispCloudGray}%
+		\colorlet{YellowFrame}{FadeFrame}%
+		\colorlet{YellowBack}{WhispCloudGray}%
+		\colorlet{MauveFrame}{FadeFrame}%
+		\colorlet{MauveBack}{WhispCloudGray}%
+		\colorlet{PeachFrame}{FadeFrame}%
+		\colorlet{PeachBack}{WhispCloudGray}%
+		\colorlet{PinkFrame}{FadeFrame}%
+		\colorlet{PinkBack}{WhispCloudGray}%
+		\colorlet{RosewaterFrame}{FadeFrame}%
+		\colorlet{RosewaterBack}{WhispCloudGray}%
+		\colorlet{FlamingoFrame}{FadeFrame}%
+		\colorlet{FlamingoBack}{WhispCloudGray}%
+		\colorlet{LavenderFrame}{FadeFrame}%
+		\colorlet{LavenderBack}{WhispCloudGray}%
+		\colorlet{TealFrame}{FadeFrame}%
+		\colorlet{TealBack}{WhispCloudGray}%
+		\colorlet{BoxText}{FadeOverlay}%
+		\colorlet{BoxTitleText}{WhispCloudGray}%
+		\let\includegraphics\fadedincludegraphics %Images
+	}%
+	\color<#1->{CtpMochaCrust}%
+	\only<#1->{%
+		\colorlet{ItemizeColor}{CtpLatteRed}%
+		\colorlet{LinkColor}{CtpLatteRed}%
+		\colorlet{UrlColor}{CtpLatteBlue}%
+		\colorlet{SkyFrame}{CtpMochaSky}%
+		\colorlet{SkyBack}{CtpMistoSky}%
+		\colorlet{GreenFrame}{CtpMochaGreen}%
+		\colorlet{GreenBack}{CtpMistoGreen}%
+		\colorlet{RedFrame}{CtpMochaMaroon}%
+		\colorlet{RedBack}{CtpMistoRed}%
+		\colorlet{BlueFrame}{CtpMochaBlue}%
+		\colorlet{BlueBack}{CtpMistoBlue}%
+		\colorlet{YellowFrame}{CtpMochaYellow}%
+		\colorlet{YellowBack}{CtpMistoYellow}%
+		\colorlet{MauveFrame}{CtpMochaMauve}%
+		\colorlet{MauveBack}{CtpMistoMauve}%
+		\colorlet{PeachFrame}{CtpMochaPeach}%
+		\colorlet{PeachBack}{CtpMistoPeach}%
+		\colorlet{PinkFrame}{CtpMochaPink}%
+		\colorlet{PinkBack}{CtpMistoPink}%
+		\colorlet{RosewaterFrame}{CtpMochaRosewater}%
+		\colorlet{RosewaterBack}{CtpMistoRosewater}%
+		\colorlet{FlamingoFrame}{CtpMochaFlamingo}%
+		\colorlet{FlamingoBack}{CtpMistoFlamingo}%
+		\colorlet{LavenderFrame}{CtpMochaLavender}%
+		\colorlet{LavenderBack}{CtpMistoLavender}%
+		\colorlet{TealFrame}{CtpMochaTeal}%
+		\colorlet{TealBack}{CtpMistoTeal}%
+		\colorlet{BoxText}{CtpMochaCrust}%
+		\colorlet{BoxTitleText}{CtpMochaCrust}%
+		\let\includegraphics\oldincludegraphics %Images
+	}%
+}
+% Highlight Row Color:
+\newcommand{\highlightrow}[2]{%
+  \def\highlightrowcolor{}%
+  \only#1{\def\highlightrowcolor{\rowcolor{#2}}}%
+}
+
+% Removing Edges:
+\makeatletter
+\define@key{beamerframe}{t}[true]{% top
+	\beamer@frametopskip=0.1cm plus .5\paperheight\relax%
+	\beamer@framebottomskip=0pt plus 1fill\relax%
+	\beamer@frametopskipautobreak=\beamer@frametopskip\relax%
+	\beamer@framebottomskipautobreak=\beamer@framebottomskip\relax%
+}
+\makeatother
+
+% Put something (like an image) at the bottom of the page.
+\newcommand{\placeimageatbottom}[1]{
+    \begin{tikzpicture}[remember picture, overlay]
+        \node[anchor=south] at (current page.south)
+        {
+            \includegraphics[width=0.5\textwidth]{#1}
+        };
+    \end{tikzpicture}
+}
+
+% Standout Slide:
+\setbeamercolor{standoutbox}{fg=white, bg=CtpLatteBlue}
+\newcommand{\standout}[1]{
+	{
+    \setbeamercolor{background canvas}{bg=white}
+    \begin{frame}[plain, c]
+        \begin{tikzpicture}[remember picture, overlay]
+            \fill[CtpLatteYellow] (current page.south west) rectangle ++(0.07\paperwidth, \paperheight);
+            \fill[CtpLatteYellow] (current page.south east) rectangle ++(-0.07\paperwidth, \paperheight);
+        \end{tikzpicture}
+				\centering
+        \highlightbox{
+				\Huge\textbf{\\[1ex]#1\vspace{1em}
+				}
+			}
+    \end{frame}
+	}
+}
+
+\newcommand{\highlightbox}[1]{
+	\begin{beamercolorbox}[
+			rounded=true,
+			shadow=true,  
+			center,       
+			wd=0.85\textwidth, 
+			sep=1em 
+		]{standoutbox}
+		#1
+	\end{beamercolorbox}
+}
+
+% Blocks:
+\newcommand{\coloredblock}[5]{
+	\vspace{-1ex}
+	\begin{center}
+		\begin{tcolorbox}[
+			width=#1,
+			enhanced,
+			arc=1ex,
+			colframe=#3,
+			colback=#4,
+			coltext=BoxText,
+			coltitle=BoxTitleText,
+			title={#2},
+			fonttitle=\bfseries]
+			\setlength{\leftmargini}{1.5ex} 
+			#5
+		\end{tcolorbox}
+	\end{center}
+}

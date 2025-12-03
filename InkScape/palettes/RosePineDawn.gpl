@@ -1,0 +1,19 @@
+GIMP Palette
+Name: RosePineDawn
+#Colors: 16
+255 250 243 base
+250 244 237 surface
+242 236 229 overlay
+201 194 186 muted
+159 151 143 subtle
+103  94  86 text
+229 107 111 love
+233 164 119 gold
+227 141 159 rose
+ 87 117 144 pine
+133 192 183 foam
+137 167 224 iris
+213 206 198 highlightLow
+184 177 169 highlightMed
+103  94  86 highlightHigh
+242 236 229 highlightOverlay

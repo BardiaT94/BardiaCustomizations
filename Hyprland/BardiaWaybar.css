@@ -1,0 +1,155 @@
+
+* {
+    font-family: "Exo 2";
+    font-weight: bold; 
+    font-size: 14px;
+	min-height: 25px;
+}
+
+window#waybar {
+    background: #11111B;
+    opacity: 0.9;
+    border: 2px solid #7287FD;
+    border-radius: 12px;
+}
+
+/* --- Module Spacing --- */
+#tray, #backlight, #bluetooth, #custom-spotify, #custon-updates, #cpu, #memory, #battery, #network, #tray, #custom-power, #custom-sensorsinfo, #custom-cliphist, #pulseaudio, #custom-keybindhint, #workspaces, #custom-cpuinfo, #custom-gpuinfo {
+    padding: 0 2px;
+    margin: 0 2px;
+}
+
+#taskbar button {
+    background: none;
+    box-shadow: none;
+    text-shadow: none;
+    border-radius: 4px;
+    transition: 0.1s ease;
+    padding: 0 4px;
+}
+#taskbar button:hover {
+    background: #89dceb;
+    color: #000000;
+    animation: ws_hover 20s ease-in-out 1;
+}
+
+#custom-arch-icon {
+    padding: 0 20px;
+    margin: 0 0px;
+    color: #DC8A78;
+}
+
+#clock {
+    padding: 0 0px;
+    margin: 0 0px;
+}
+
+#workspaces button {
+    padding: 0 6px;
+}
+
+#workspaces button:hover {
+    background: #C7CEFE;
+    color: #000000;
+    padding: 0 6px;
+    animation: ws_hover 20s ease-in-out 1;
+}
+
+#custom-spotify {
+    color: #f5c2e7;
+}
+#backlight {
+    color: #89dceb;
+}
+#pulseaudio.output {
+    color: #cba6f7;
+}
+#pulseaudio.output.muted {
+    color: #F38BA8;
+}
+#pulseaudio.input {
+    color: #cba6f7;
+}
+#pulseaudio.input.source-muted {
+    color: #F38BA8;
+}
+#cpu {
+    color: #f38ba8;
+}
+#memory {
+    color: #fab387;
+}
+#battery {
+    color: #a6e3a1;
+}
+#battery.charging, #battery.plugged {
+    color: #94e2d5;
+}
+#battery.critical:not(.charging) {
+    color: #f38ba8;
+    animation: blink 1s ease-in-out infinite;
+}
+#custom-power {
+    color: #f38ba8;
+    padding-right: 10px;
+}
+@keyframes blink { to { color: #1e1e2e; background-color: #f38ba8; } }
+
+#custom-tray-icon-right {
+    color: #89b4fa;
+    font-size: 20px;
+}
+
+#custom-tray-icon-left {
+    color: #89b4fa;
+    font-size: 20px;
+}
+
+#network.bandwidth {
+    font-size: 22px;
+    padding: 4px 4px;
+    margin-bottom: 6px;
+}
+
+#custom-separator {
+    margin-bottom: 6px;
+    color: #94E2D5;
+}
+
+#custom-sensorsinfo {
+    color: #7287FD;
+    font-size: 18px;
+}
+#tray-drawer-right {
+    background: transparent;
+}
+
+#tray-drawer-right:hover {
+    background: #41414B;
+    border: 2px solid #7287FD;
+}
+
+#tray-drawer-left {
+    background: transparent;
+}
+#tray-drawer-left:hover {
+    background: #41414B;
+    border: 2px solid #7287FD;
+}
+#custom-cliphist {
+    color: #7287FD;
+}
+
+#network {
+    color: #89dceb;
+}
+
+#power-profiles-daemon {
+    color: #cba6f7;
+    padding-right: 10px;
+}
+
+#custom-workflows {
+    color: #94e2d5;
+    /* padding-right: 0px; */
+}
