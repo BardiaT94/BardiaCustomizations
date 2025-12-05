@@ -84,9 +84,9 @@
     },
     "modules": [
       "custom/tray-icon-left", 
+      "custom/workflows",
       "backlight",
-      "battery",
-      "custom/workflows"
+      "battery"
     ]
   }
 
