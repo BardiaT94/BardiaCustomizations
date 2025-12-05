@@ -42,8 +42,8 @@ echo "Restoring MPV customizations..."
 cp -rf "$PWD/MPV/." "$HOME/.config/mpv"
 
 echo "Restoring Xilinx themes and waveform..."
-cp -f "$PWD/Xilinx/themes/BardiaCtp.xmltheme" "$HOME/.Xilinx/Vivado/2025.1/themes/"
-cp -f "$PWD/Xilinx/waveform/wv.ini" "$HOME/.Xilinx/Vivado/2025.1/waveform/"
+cp -f "$PWD/Xilinx/BardiaCtp.xmltheme" "$HOME/.Xilinx/Vivado/2025.1/themes/"
+cp -f "$PWD/Xilinx/wv.ini" "$HOME/.Xilinx/Vivado/2025.1/waveform/"
 
 echo "Restoring Thunar customizations..."
 cp -rf "$PWD/Thunar" "$HOME/.config"
